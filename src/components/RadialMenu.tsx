@@ -35,17 +35,16 @@ function getCirclePoints(center: Point, radius: number, count: number, startAngl
 interface RadialMenuProps {
   items: MenuItem[];
   centerLabel?: string;
-  // accentColor?: string; // Removed unused prop
 }
 
 export const RadialMenu: React.FC<RadialMenuProps> = ({
   items,
   centerLabel = "Меню",
-  // accentColor,   // Removed unused prop
 }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [expanded, setExpanded] = useState<number[]>([]);
   const [dimensions, setDimensions] = useState<{ w: number, h: number }>({ w: 0, h: 0 });
+  const [recentlyExpandedLevel, setRecentlyExpandedLevel] = useState<number | null>(null);
 
   useEffect(() => {
     const updateDims = () => {
@@ -59,12 +58,14 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     return () => window.removeEventListener('resize', updateDims);
   }, []);
 
-  const handleExpand = (id: number, /*item: MenuItem,*/ level: number) => { // 'item' removed
+  const handleExpand = (id: number, level: number) => {
     let newExpanded = expanded.slice(0, level);
     if (expanded[level] === id) {
       setExpanded(newExpanded);
+      setRecentlyExpandedLevel(null);
     } else {
       setExpanded([...newExpanded, id]);
+      setRecentlyExpandedLevel(level);
     }
   };
 
@@ -98,7 +99,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
           ...renderMenu(
             item.children,
             pos,
-            Math.max(radius * 0.68, 85), // увеличили минимальный радиус для избежания наезда подписей
+            Math.max(radius * 0.68, 85), // leave unchanged
             level + 1,
             id
           )
@@ -111,7 +112,6 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
   idCounter = 0;
   const cx = Math.round((dimensions.w || 520) / 2);
   const cy = Math.round((dimensions.h || 520) / 2);
-  console.log("👉 cx, cy:", cx, cy);
 
   let baseRadius = Math.max(Math.min(cx, cy) - 80, 80);
 
@@ -131,6 +131,13 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     undefined
   );
 
+  useEffect(() => {
+    if (recentlyExpandedLevel !== null) {
+      const timeout = setTimeout(() => setRecentlyExpandedLevel(null), 520);
+      return () => clearTimeout(timeout);
+    }
+  }, [recentlyExpandedLevel]);
+
   return (
     <div ref={rootRef} className="menu-root" style={{
       minHeight: 320,
@@ -138,8 +145,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
       alignItems: "center",
       justifyContent: "center"
     }}>
-      {layout.map((item /*, idx*/) => { // idx removed
-        // const isExpanded = expanded[item.level] === item.id; // removed unused variable
+      {layout.map((item) => {
         const parentExpanded = item.level === 0 || expanded[item.level - 1] === item.parent;
         if ((item.level > 0 && !parentExpanded) || (item.level > 1 && !expanded[item.level-1])) return null;
 
@@ -150,6 +156,15 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
           dotClass += " radial-dot--has-children";
         } else {
           dotClass += " radial-dot--no-children";
+        }
+
+        let animationClass = "";
+        if (
+          item.level === 1 &&
+          recentlyExpandedLevel === 0 && // тыц по центру
+          parentExpanded
+        ) {
+          animationClass = " animate-fade-in animate-scale-in";
         }
 
         const style: React.CSSProperties = {
@@ -180,20 +195,19 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
           zIndex: 10,
         };
 
-        // Условие: если это центр и он раскрыт, подпись не показываем
         const hideLabel = item.isCenter && expanded.length > 0 && typeof expanded[0] !== "undefined";
 
         return (
           <React.Fragment key={item.id}>
             <div
-              className={dotClass}
+              className={dotClass + animationClass}
               style={style}
               onClick={e => {
                 e.stopPropagation();
                 if (item.isCenter && items.length) {
-                  handleExpand(item.id, /*{ ...item },*/ item.level)
+                  handleExpand(item.id, item.level)
                 } else if (item.hasChildren) {
-                  handleExpand(item.id, /*{ ...item },*/ item.level)
+                  handleExpand(item.id, item.level)
                 } else if (!item.isCenter && !item.hasChildren && items && items[item.id-2] && items[item.id-2].onClick) {
                   items[item.id-2].onClick?.();
                   setExpanded([]);
