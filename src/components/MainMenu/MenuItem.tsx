@@ -1,15 +1,9 @@
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getCirclePosition, getItemAngle } from './mathUtils';
-
-type MenuItem = {
-  label: string;
-  onClick?: (navigate?: (path: string) => void) => void;
-  children?: MenuItem[];
-};
+import type { MenuItemProps } from './items';
 
 type DotMenuItemProps = {
-  item: MenuItem;
+  item: MenuItemProps;
   parentPosition: [number, number];
   level: number;
   index: number;
@@ -21,6 +15,7 @@ type DotMenuItemProps = {
   isOpen: boolean;
   itemKey: string;
   hasOpenChild: boolean;
+  openItems: Set<string>;
 };
 
 const MenuItem: React.FC<DotMenuItemProps> = ({
@@ -35,19 +30,12 @@ const MenuItem: React.FC<DotMenuItemProps> = ({
   onToggle,
   isOpen,
   itemKey,
-  hasOpenChild
+  hasOpenChild,
+  openItems
 }) => {
   const [position, setPosition] = useState<[number, number]>(parentPosition);
-  const captionRef = useRef<HTMLDivElement>(null);
   const radius = 150 / (level + 1);
 
-  // Определяем класс для точки
-  const getDotClass = () => {
-    if (!item.children) return 'dotempty';
-    return hasOpenChild || isOpen ? 'dotoff' : 'dot';
-  };
-
-  // Рассчитываем позицию элемента
   useEffect(() => {
     const angle = getItemAngle(index, totalSiblings, startAngle);
     const newPosition = getCirclePosition(
@@ -56,19 +44,18 @@ const MenuItem: React.FC<DotMenuItemProps> = ({
       radius,
       angle
     );
-
     setPosition(newPosition);
   }, [parentPosition, radius, index, totalSiblings, startAngle]);
 
-  // Обработчик клика
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (item.children) onToggle(itemKey);
+    else if (item.onClick) item.onClick(navigate);
+  };
 
-    if (item.children) {
-      onToggle(itemKey);
-    } else if (item.onClick) {
-      item.onClick(navigate);
-    }
+  const getDotClass = () => {
+    if (!item.children) return 'dotempty';
+    return hasOpenChild || isOpen ? 'dotoff' : 'dot';
   };
 
   return (
@@ -84,7 +71,6 @@ const MenuItem: React.FC<DotMenuItemProps> = ({
       />
 
       <div
-        ref={captionRef}
         className="caption"
         style={{
           left: `${position[0]}px`,
@@ -95,26 +81,26 @@ const MenuItem: React.FC<DotMenuItemProps> = ({
         {item.label}
       </div>
 
-      {item.children && isOpen && (
-        <>
-          {item.children.map((child, childIndex) => (
-            <MenuItem
-              key={`${itemKey}-${childIndex}`}
-              item={child}
-              parentPosition={position}
-              level={level + 1}
-              index={childIndex}
-              totalSiblings={item.children?.length ?? 0}
-              startAngle={startAngle}
-              navigate={navigate}
-              onToggle={onToggle}
-              isOpen={isOpen}
-              itemKey={`${itemKey}-${childIndex}`}
-              hasOpenChild={false}
-            />
-          ))}
-        </>
-      )}
+      {item.children && isOpen && item.children.map((child, childIndex) => {
+        const childKey = `${itemKey}-${childIndex}`;
+        return (
+          <MenuItem
+            key={childKey}
+            item={child}
+            parentPosition={position}
+            level={level + 1}
+            index={childIndex}
+            totalSiblings={item.children?.length || 0}
+            startAngle={startAngle}
+            navigate={navigate}
+            onToggle={onToggle}
+            isOpen={openItems.has(childKey)}
+            itemKey={childKey}
+            hasOpenChild={Array.from(openItems).some(k => k.startsWith(`${childKey}-`))}
+            openItems={openItems}
+          />
+        );
+      })}
     </>
   );
 };

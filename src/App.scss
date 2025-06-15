@@ -401,14 +401,6 @@ a {
     padding-left: 20px;
     position: relative;
     color: $color-text;
-
-    &:before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: $color-accent;
-      font-weight: bold;
-    }
   }
 }
 

@@ -19,7 +19,6 @@ $font-body: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
   height: 100%;
   min-height: 300px;
   overflow: hidden;
-  background-color: #222;
 }
 
 .dot, .dotoff, .dotempty {
@@ -61,4 +60,19 @@ $font-body: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
   padding: 2px 5px;
   border-radius: 3px;
   pointer-events: none;
+}
+
+// Добавьте эти стили в конец файла
+.dot-menu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: $color-bg;
+}
+
+.dot, .dotoff, .dotempty {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
