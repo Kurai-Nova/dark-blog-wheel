@@ -18,12 +18,10 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ path }) => {
       setError(null);
 
       try {
-        // Корректно соединяем BASE_URL и content + path + .md
-        let basePath = import.meta.env.BASE_URL || '/';
-        if (!basePath.endsWith('/')) basePath += '/';
-        let relPath = path;
-        if (relPath.startsWith('/')) relPath = relPath.substring(1);
-        const filePath = `${basePath}content/${relPath}.md`;
+        // Получаем базовый путь из vite.config.ts
+        const basePath = import.meta.env.BASE_URL || '/';
+        // Конвертируем путь в путь к файлу .md с учетом базового пути
+        const filePath = `${basePath}content${path}.md`.replace('//', '/');
         console.log('Loading markdown from:', filePath);
 
         const response = await fetch(filePath);
