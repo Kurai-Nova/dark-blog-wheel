@@ -24,7 +24,7 @@ const BreadcrumbList = React.forwardRef<
   HTMLOListElement,
   React.ComponentPropsWithoutRef<"ol">
 >(({ className, ...props }, ref) => (
-  <div
+  <ol
     ref={ref}
     className={clsx("ui-breadcrumb-list", className)}
     {...props}
