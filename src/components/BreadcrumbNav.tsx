@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -65,7 +64,7 @@ function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
     }
   }
   // Фильтрация дубликатов (бывает при library)
-  return path.filter((p, i, arr) => i === 0 || arr[i].label !== arr[i - 1].label);
+  return path.filter((_, i, arr) => i === 0 || arr[i].label !== arr[i - 1].label);
 }
 
 const BreadcrumbNav: React.FC = () => {
