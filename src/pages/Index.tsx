@@ -1,24 +1,11 @@
 
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import MainMenu from "../components/MainMenu/MainMenu";
-import MarkdownRenderer from "../components/MarkdownRenderer/MarkdownRenderer";
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [currentPath, setCurrentPath] = useState<string>('');
-
-  useEffect(() => {
-    // Извлекаем путь из hash части URL
-    const hash = location.hash.substring(1); // убираем #
-    if (hash) {
-      setCurrentPath(`/${hash}`);
-    } else {
-      setCurrentPath('');
-    }
-  }, [location]);
 
   return (
     <div>
@@ -32,9 +19,6 @@ const Index: React.FC = () => {
             Всё просто, современно и без лишнего.<br />
             <span style={{color:"#4bb6fa"}}>Навигация — через интерактивное круговое меню в центре!</span>
           </p>
-        </div>
-        <div style={{margin:"56px 0 0 0"}}>
-          <MarkdownRenderer path={currentPath} />
         </div>
       </div>
     </div>
