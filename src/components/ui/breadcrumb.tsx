@@ -26,7 +26,7 @@ const BreadcrumbList = React.forwardRef<
   HTMLOListElement,
   React.ComponentPropsWithoutRef<"ol">
 >(({ className, ...props }, ref) => (
-  <ol
+  <div
     ref={ref}
     className={clsx(
       "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
@@ -41,7 +41,7 @@ const BreadcrumbItem = React.forwardRef<
   HTMLLIElement,
   React.ComponentPropsWithoutRef<"li">
 >(({ className, ...props }, ref) => (
-  <li
+  <span
     ref={ref}
     className={clsx("inline-flex items-center gap-1.5", className)}
     {...props}
@@ -87,14 +87,14 @@ const BreadcrumbSeparator = ({
   className,
   ...props
 }: React.ComponentProps<"li">) => (
-  <li
+  <span
     role="presentation"
     aria-hidden="true"
     className={clsx("[&>svg]:size-3.5", className)}
     {...props}
   >
     {children ?? <ChevronRight />}
-  </li>
+  </span>
 )
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
 
