@@ -13,7 +13,13 @@ import {
   BreadcrumbSeparator,
 } from "./Breadcrumb";
 
-// Функция поиска читаемых названий для крошек
+// Helper to turn Latin slugs into nice Russian labels, if possible
+function getPrettyLabel(segment: string, possibleLabel?: string) {
+  if (possibleLabel) return possibleLabel;
+  return segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase();
+}
+
+// Функция поиска читаемых названий для крошек без использования item.url
 function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
   const path: { label: string; url: string }[] = [{ label: "Главная", url: "/" }];
   let items = menuItems;
@@ -30,40 +36,41 @@ function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
       ? `${segment}${nextSegment}`
       : segment;
 
-    // Поиск в текущем уровне меню
-    let found = items.find(item => 
+    // Найдём пункт меню по сегменту — ищем по label, с учётом регистра
+    let found = items.find(item =>
       item.label.toLowerCase() === segment ||
-      item.label.toLowerCase() === combinedSegment ||
-      (item.url && item.url.replace(/^\//, "") === segment)
+      item.label.toLowerCase() === combinedSegment
     );
 
+    // Спец. обработка для библиотечных дочерних элементов с #hash (Книги/Статьи)
     if (!found && segment === "library" && nextSegment?.startsWith("#")) {
       i++;
       found = items.find(item => item.label === "Библиотека");
       if (found) {
         const child = found.children?.find(child =>
-          child.label === (nextSegment === "#books" ? "Книги" : "Статьи")
+          child.label === (nextSegment === "#books" ? "Книги" :
+                      nextSegment === "#articles" ? "Статьи" : null)
         );
-        path.push({ label: found.label, url: `/${segment}` });
-        currentUrl = `/${segment}${nextSegment}`;
+        path.push({ label: found.label, url: `/library` });
+        currentUrl = `/library${nextSegment}`;
         if (child) {
           path.push({ label: child.label, url: currentUrl });
         } else {
-          path.push({ label: nextSegment.substring(1), url: currentUrl });
+          path.push({ label: getPrettyLabel(nextSegment.substring(1)), url: currentUrl });
         }
         continue;
       }
     }
 
+    // Правильно собираем currentUrl для хлебных крошек
     currentUrl = currentUrl ? `${currentUrl}/${segment}` : `/${segment}`;
 
     if (found) {
-      // Показываем только читаемый label (никогда алиас)
       path.push({ label: found.label, url: currentUrl });
       if (found.children) items = found.children;
     } else {
-      // Не найдено в меню: пишем человекочитаемый вид (например, без алиаса "/" — первая буква заглавная)
-      const pretty = segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase();
+      // Не найдено — красивый fallback
+      const pretty = getPrettyLabel(segment);
       path.push({ label: pretty, url: currentUrl });
       items = [];
     }
@@ -114,4 +121,3 @@ const BreadcrumbNav: React.FC = () => {
 };
 
 export default BreadcrumbNav;
-
