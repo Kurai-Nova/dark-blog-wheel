@@ -1,3 +1,4 @@
+
 // import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
@@ -9,7 +10,7 @@ import { version } from './package.json';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    base: "https://kurai-nova.github.io/dark-blog-wheel/",
+    base: "/dark-blog-wheel/", // Исправлено (был полный URL, теперь относительный путь)
     esbuild: {
       pure: mode === 'production' ? ['console.log'] : [],
     },
