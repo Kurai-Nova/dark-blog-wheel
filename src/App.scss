@@ -1,5 +1,5 @@
-// Оставлены только используемые стили, `.radial-dot*`, `.radial-label`, `.radial-caption` и связанные анимации удалены, если не используются в остальных файлах проекта.
 
+// Основная цветовая схема и шрифты
 $color-bg: #161a20;
 $color-panel: #232834;
 $color-text: #e3e7ef;
@@ -8,11 +8,10 @@ $color-border: #313846;
 $color-accent: #4bb6fa;
 $color-accent-hover: #6bd0ff;
 $color-accent-bg: #89d9ff;
-$color-dot-border: #4c5566;
 $font-head: 'Georgia', 'Times New Roman', Times, serif;
 $font-body: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
 
-// CSS reset & base styles
+// CSS reset & базовые стили
 html, body {
   height: 100%;
   margin: 0;
@@ -31,7 +30,7 @@ body {
   overflow-x: hidden;
 }
 
-h1,h2,h3,h4 {
+h1, h2, h3, h4 {
   font-family: $font-head;
   font-weight: bold;
   letter-spacing: 0.01em;
@@ -76,57 +75,19 @@ a {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  // border временно убран по запросу пользователя
 }
 
-// Анимации для радиального меню
+// Анимации меню
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(10px);}
+  100% { opacity: 1; transform: translateY(0);}
 }
-
 @keyframes scaleIn {
-  0% {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0% { transform: scale(0.5); opacity: 0;}
+  100% { transform: scale(1); opacity: 1;}
 }
-
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@media (max-width: 900px) {
-  .blog-main { padding: 18px 5px; }
-  .menu-root {
-    width: 340px;
-    max-width: 98vw;
-    height: 340px;
-  }
-}
-
-@media (max-width: 600px) {
-  .blog-main { border-radius: 0; }
-  .menu-root {
-    width: 200px;
-    max-width: 98vw;
-    height: 200px;
-  }
-}
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+.animate-scale-in { animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
 #root {
   max-width: 1280px;
@@ -140,23 +101,13 @@ a {
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
+  &:hover { filter: drop-shadow(0 0 2em #646cffaa);}
+  &.react:hover { filter: drop-shadow(0 0 2em #61dafbaa);}
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg);}
 }
-
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
@@ -166,7 +117,6 @@ a {
 .card {
   padding: 2em;
 }
-
 .read-the-docs {
   color: #888;
 }
@@ -189,5 +139,56 @@ a {
   max-width: 560px;
   margin: 0 auto;
   color: #8891a6;
-  font-size: 1.18rem;
+  font-size: 1.12rem;
 }
+
+/* --- Media Queries — группируем внизу! --- */
+
+@media (max-width: 900px) {
+  html, body {
+    font-size: 17px;
+  }
+  .blog-main {
+    padding: 18px 5px;
+  }
+  .menu-root {
+    width: 340px;
+    max-width: 98vw;
+    height: 340px;
+  }
+  .brand-header {
+    font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 600px) {
+  html, body {
+    font-size: 15.8px;
+  }
+  .blog-main {
+    border-radius: 0;
+    padding: 12px 2px 38px 2px;
+  }
+  .menu-root {
+    width: 200px;
+    max-width: 98vw;
+    height: 200px;
+  }
+  .brand-header {
+    font-size: 1.17rem;
+    margin: 28px 0 18px 0;
+  }
+  h1 {font-size: 1.5rem;}
+  h2 {font-size: 1.18rem;}
+  h3 {font-size: 1.07rem;}
+  .blog-main p {
+    font-size: 0.98rem;
+    line-height: 1.54;
+    margin-bottom: 0.8em;
+  }
+  #root {
+    padding: 0.5rem;
+  }
+}
+
+/* Конец файла — ненужные и неиспользуемые стили удалены */
