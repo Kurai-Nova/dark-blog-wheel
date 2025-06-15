@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -11,38 +10,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { menuItems, MenuItemProps } from "./MainMenu/items";
 
-// Вспомогательная функция для поиска item по сегментам URL
-function findMenuPathByUrl(pathParts: string[]): {item: MenuItemProps; key: string}[] {
-  let items = menuItems;
-  let currentPath: {item: MenuItemProps; key: string}[] = [];
-  let key = '';
-  for (let i = 0; i < pathParts.length; ++i) {
-    const segment = decodeURIComponent(pathParts[i]);
-    const found = items.find(m => m.label.toLowerCase() === segment.toLowerCase());
-    if (found) {
-      key = key === '' ? segment : `${key}-${segment}`;
-      currentPath.push({item: found, key});
-      items = found.children || [];
-    } else {
-      break;
-    }
-  }
-  return currentPath;
-}
-
-// Формирование Breadcrumb согласно текущему URL
 const BreadcrumbNav: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Маппинг path → меню
-  const pathToMenuMap: {[url: string]: string[]} = {
-    "/": [],
-    "/library": ["Библиотека"],
-    "/library#books": ["Библиотека", "Книги"],
-    "/library#articles": ["Библиотека", "Статьи"],
-    "/sport": ["Спорт"],
-  };
 
   // Получаем путь из pathname/hash
   const pathname = location.pathname;
@@ -142,4 +112,3 @@ const BreadcrumbNav: React.FC = () => {
 };
 
 export default BreadcrumbNav;
-
