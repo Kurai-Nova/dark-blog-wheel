@@ -1,6 +1,6 @@
 
 import React from "react";
-import "../styles/main.scss";
+
 import RadialMenu from "../components/RadialMenu";
 import BrandHeader from "../components/BrandHeader";
 
@@ -51,4 +51,3 @@ const Index: React.FC = () => {
 };
 
 export default Index;
-
