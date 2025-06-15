@@ -58,6 +58,13 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     return () => window.removeEventListener('resize', updateDims);
   }, []);
 
+  useEffect(() => {
+    if (recentlyExpandedLevel !== null) {
+      const timeout = setTimeout(() => setRecentlyExpandedLevel(null), 520);
+      return () => clearTimeout(timeout);
+    }
+  }, [recentlyExpandedLevel]);
+
   const handleExpand = (id: number, level: number) => {
     let newExpanded = expanded.slice(0, level);
     if (expanded[level] === id) {
@@ -130,13 +137,6 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     0,
     undefined
   );
-
-  useEffect(() => {
-    if (recentlyExpandedLevel !== null) {
-      const timeout = setTimeout(() => setRecentlyExpandedLevel(null), 520);
-      return () => clearTimeout(timeout);
-    }
-  }, [recentlyExpandedLevel]);
 
   return (
     <div ref={rootRef} className="menu-root" style={{
