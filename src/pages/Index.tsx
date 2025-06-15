@@ -1,5 +1,5 @@
-
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import RadialMenu from "../components/RadialMenu";
 import BrandHeader from "../components/BrandHeader";
@@ -7,36 +7,44 @@ import BrandHeader from "../components/BrandHeader";
 const menuData = [
   {
     label: "Здоровье",
-    onClick: () => window.location.href = "/#health",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#health") : window.location.href = "/#health",
   },
   {
     label: "Спорт",
-    onClick: () => window.location.href = "/#sport",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/sport") : window.location.href = "/sport",
   },
   {
     label: "Путешествия",
-    onClick: () => window.location.href = "/#travel",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#travel") : window.location.href = "/#travel",
   },
   {
     label: "IT",
-    onClick: () => window.location.href = "/#it",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#it") : window.location.href = "/#it",
   },
   {
     label: "Мысли",
-    onClick: () => window.location.href = "/#thoughts",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#thoughts") : window.location.href = "/#thoughts",
   },
   {
     label: "Библиотека",
-    onClick: () => window.location.href = "/#library",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/library") : window.location.href = "/library",
   },
 ];
 
 const Index: React.FC = () => {
+  const navigate = useNavigate();
+
+  // Передаем навигатор в RadialMenu для роутинга без перезагрузки
+  const menuWithNav = menuData.map(item => ({
+    ...item,
+    onClick: () => item.onClick(navigate),
+  }));
+
   return (
     <div>
       <BrandHeader />
       <div className="blog-main">
-        <RadialMenu items={menuData} centerLabel="Меню" />
+        <RadialMenu items={menuWithNav} centerLabel="Меню" />
         <div style={{textAlign:"center", margin:"56px 0 0 0"}}>
           <h1 style={{marginBottom: 13}}>Добро пожаловать в <span style={{color:'#4bb6fa'}}>Scriptum Blog</span></h1>
           <p style={{maxWidth:560, margin:"0 auto", color:"#8891a6", fontSize: "1.18rem"}}>
