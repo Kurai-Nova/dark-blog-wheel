@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -10,7 +11,7 @@ import './App.scss'
 const App = () => (
     <>
       <Toaster />
-      <BrowserRouter>
+      <BrowserRouter basename="/dark-blog-wheel">
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/library" element={<Library />} />
