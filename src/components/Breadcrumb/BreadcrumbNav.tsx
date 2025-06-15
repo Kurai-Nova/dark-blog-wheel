@@ -1,5 +1,8 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+import { menuItems } from "../MainMenu/items";
+
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -7,8 +10,7 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { menuItems } from "./MainMenu/items";
+} from "./Breadcrumb";
 
 function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
   const path: { label: string; url: string }[] = [{ label: "Главная", url: "/" }];

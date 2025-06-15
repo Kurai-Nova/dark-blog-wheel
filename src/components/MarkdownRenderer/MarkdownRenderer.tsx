@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import clsx from 'clsx';
+
 import './MarkdownRenderer.scss';
 
 interface MarkdownRendererProps {
@@ -22,8 +24,6 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ path }) => {
         const basePath = import.meta.env.BASE_URL || '/';
         // Конвертируем путь в путь к файлу .md с учетом базового пути
         const filePath = `${basePath}content${path}.md`.replace('//', '/');
-        console.log('Loading markdown from:', filePath);
-
         const response = await fetch(filePath);
 
         if (!response.ok) {
@@ -45,6 +45,9 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ path }) => {
     }
   }, [path]);
 
+  const noErrorAndHasContent = !loading && !error && content;
+  const innerStyle = clsx({ "markdown-error": error, "markdown-empty": !content, "markdown-content": noErrorAndHasContent });
+
   if (loading) {
     return (
       <div className="markdown-renderer">
@@ -55,33 +58,23 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ path }) => {
     );
   }
 
-  if (error) {
-    return (
-      <div className="markdown-renderer">
-        <div className="markdown-error">
-          <h3>Ошибка загрузки</h3>
-          <p>{error}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!content) {
-    return (
-      <div className="markdown-renderer">
-        <div className="markdown-empty">
-          Контент не найден
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="markdown-renderer">
-      <div className="markdown-content">
-        <ReactMarkdown>
-          {content}
-        </ReactMarkdown>
+      <div className={innerStyle}>
+        {error &&
+          <>
+            <h3>Ошибка загрузки</h3>
+            <p>{error}</p>
+          </>
+        }
+        {!content &&
+          <>Контент не найден</>
+        }
+        {noErrorAndHasContent &&
+          <ReactMarkdown>
+            {content}
+          </ReactMarkdown>
+        }
       </div>
     </div>
   );
