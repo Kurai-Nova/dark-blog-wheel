@@ -1,6 +1,16 @@
 
 import React from "react";
 
+// ==== Type shims for toast system compatibility ====
+export type ToastActionElement = React.ReactElement | null;
+export type ToastProps = React.HTMLAttributes<HTMLDivElement> & {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  // Allow additional props as shim
+  [key: string]: any;
+};
+// ==== end shims ====
+
 // Заглушка для тоастов, совместимая с текущим API, без Radix и shadcn/ui
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => (
   <>{children}</>
