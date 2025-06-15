@@ -166,7 +166,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
           width: 120,
           transform: "translate(-50%, 0)",
           position: "absolute",
-          fontSize: item.isCenter ? "1.23rem" : "1rem",
+          fontSize: item.isCenter ? "1.23rem" : "0.94rem",
           fontWeight: "bold",
           color: item.isCenter
             ? "var(--color-accent, #4bb6fa)"
@@ -179,6 +179,9 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
           textShadow: "0 2px 14px #161a2094",
           zIndex: 10,
         };
+
+        // Условие: если это центр и он раскрыт, подпись не показываем
+        const hideLabel = item.isCenter && expanded.length > 0 && typeof expanded[0] !== "undefined";
 
         return (
           <React.Fragment key={item.id}>
@@ -197,9 +200,11 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
                 }
               }}
             />
-            <div className="radial-label" style={captionStyle}>
-              {item.label}
-            </div>
+            {!hideLabel && (
+              <div className="radial-label" style={captionStyle}>
+                {item.label}
+              </div>
+            )}
           </React.Fragment>
         );
       })}

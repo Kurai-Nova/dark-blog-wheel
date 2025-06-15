@@ -87,7 +87,7 @@ a {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 2px dashed #d62d4b80 !important; // временно показываем границу для теста
+  // border временно убран по запросу пользователя
 }
 
 .radial-dot, .radial-dot--center, .radial-dot--has-children, .radial-dot--no-children {
@@ -131,7 +131,7 @@ a {
 .radial-label {
   font-family: $font-head;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.94rem; // было 1rem, уменьшено на 1pt
   color: $color-accent;
   position: absolute;
   pointer-events: none;
@@ -141,7 +141,7 @@ a {
   width: 120px;
   left: 50%;
   transform: translate(-50%, 0);
-  margin-top: 8px;
+  margin-top: 4px; // было 8px, стало меньше
   z-index:10;
 }
 
