@@ -113,17 +113,17 @@ a {
   box-shadow: 0 2px 16px #021e308a;
 }
 .radial-dot--has-children {
-  background: lighten($color-accent, 20%);
+  background: color.adjust($color-accent, $lightness: 20%);
   border-color: $color-accent;
 }
 .radial-dot--no-children {
   background: $color-panel;
-  border-color: lighten($color-border, 18%);
+  border-color: color.adjust($color-border, $lightness: 18%);
 }
 
 .radial-dot:hover, .radial-dot--center:hover, .radial-dot--has-children:hover, .radial-dot--no-children:hover {
   background: $color-accent;
-  border-color: lighten($color-accent, 15%);
+  border-color: color.adjust($color-accent, $lightness: 15%);
   box-shadow: 0 4px 18px #4bb6faf1;
 }
 
