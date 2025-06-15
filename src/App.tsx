@@ -1,6 +1,6 @@
 
 import { Toaster } from "@/components/ui/toaster";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Library from "./pages/Library";
@@ -11,7 +11,7 @@ import './App.scss'
 const App = () => (
     <>
       <Toaster />
-      <BrowserRouter basename="/dark-blog-wheel">
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/library" element={<Library />} />
@@ -19,7 +19,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
 );
 
