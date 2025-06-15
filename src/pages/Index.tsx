@@ -2,8 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import RadialMenu from "../components/RadialMenu";
-import BrandHeader from "../components/BrandHeader";
+import MainMenu from "../components/MainMenu/MainMenu";
 
 const menuData = [
   {
@@ -34,7 +33,7 @@ const menuData = [
         onClick: (navigate?: (path: string) => void) => navigate ? navigate("/library#books") : window.location.href = "/library#books",
       },
       {
-        label: "Статьи", 
+        label: "Статьи",
         onClick: (navigate?: (path: string) => void) => navigate ? navigate("/library#articles") : window.location.href = "/library#articles",
       }
     ]
@@ -56,9 +55,9 @@ const Index: React.FC = () => {
 
   return (
     <div>
-      <BrandHeader />
+      <div className="brand-header">Nick Notebook</div>
       <div className="blog-main">
-        <RadialMenu items={menuWithNav} centerLabel="Меню" />
+        <MainMenu items={menuWithNav} centerLabel="Меню" />
         <div style={{textAlign:"center", margin:"56px 0 0 0"}}>
           <h1 style={{marginBottom: 13}}>Добро пожаловать в <span style={{color:'#4bb6fa'}}>Scriptum Blog</span></h1>
           <p style={{maxWidth:560, margin:"0 auto", color:"#8891a6", fontSize: "1.18rem"}}>

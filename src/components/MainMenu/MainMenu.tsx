@@ -1,5 +1,5 @@
-
 import React, { useRef, useEffect, useState } from 'react';
+import './style.scss';
 
 type MenuItem = {
   label: string;
@@ -22,11 +22,16 @@ type RenderedItem = {
 
 let idCounter = 0;
 
-function getCirclePoints(center: Point, radius: number, count: number, startAngle = -90) {
+function getCirclePoints(
+  center: Point,
+  radius: number,
+  count: number,
+  startAngle = -90
+): Point[] {
   if (count === 0) return [];
   const step = 360 / count;
-  return new Array(count).fill(undefined).map((_, i) => {
-    const angle = ((startAngle + step * i) * Math.PI) / 180;
+  return Array.from({ length: count }, (_, i) => {
+    const angle = (startAngle + step * i) * Math.PI / 180;
     return {
       x: center.x + radius * Math.cos(angle),
       y: center.y + radius * Math.sin(angle),
@@ -39,7 +44,7 @@ interface RadialMenuProps {
   centerLabel?: string;
 }
 
-export const RadialMenu: React.FC<RadialMenuProps> = ({
+export const MainMenu: React.FC<RadialMenuProps> = ({
   items,
   centerLabel = "Меню",
 }) => {
@@ -51,8 +56,10 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
   useEffect(() => {
     const updateDims = () => {
       if (rootRef.current) {
-        setDimensions({ w: rootRef.current.offsetWidth, h: rootRef.current.offsetHeight });
-        console.log("☑️ .menu-root dimensions:", rootRef.current.offsetWidth, rootRef.current.offsetHeight);
+        setDimensions({
+          w: rootRef.current.offsetWidth,
+          h: rootRef.current.offsetHeight
+        });
       }
     }
     updateDims();
@@ -83,18 +90,25 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     center: Point,
     radius: number,
     level: number,
-    parent?: number,
-    startAngle = -90
+    parent?: number
   ): RenderedItem[] {
     let result: RenderedItem[] = [];
-    
-    // Для дочерних элементов вычисляем позиции по кругу вокруг родителя
-    const positions = level > 0 ? getCirclePoints(center, radius, items.length, startAngle) : [center];
-    
+
+    let positions: Point[] = [];
+
+    // Центральный элемент
+    if (level === 0) {
+      positions = [center];
+    }
+    // Все дочерние элементы
+    else {
+      positions = getCirclePoints(center, radius, items.length);
+    }
+
     items.forEach((item, index) => {
       const id = ++idCounter;
-      const pos = level === 0 && parent === undefined ? center : positions[index];
-      
+      const pos = positions[index];
+
       result.push({
         id,
         level,
@@ -105,14 +119,15 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
         hasChildren: !!item.children && item.children.length > 0,
         onClick: item.onClick,
       });
-      
+
       if (item.children && expanded[level] === id) {
-        // Дочерние элементы размещаются вокруг своего родителя с меньшим радиусом
+        // Увеличиваем радиус для дочерних элементов
+        const childRadius = Math.max(radius * 1.2, 100);
         result.push(
           ...renderMenu(
             item.children,
-            pos, // дочерние элементы размещаются вокруг своего родителя
-            Math.max(radius * 0.6, 80), // уменьшаем радиус для дочерних элементов
+            pos,
+            childRadius,
             level + 1,
             id
           )
@@ -125,35 +140,29 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
   idCounter = 0;
   const cx = Math.round((dimensions.w || 520) / 2);
   const cy = Math.round((dimensions.h || 520) / 2);
-
-  let baseRadius = Math.max(Math.min(cx, cy) - 80, 80);
+  let baseRadius = Math.max(Math.min(cx, cy) - 100, 100);
 
   if (!dimensions.w || !dimensions.h) {
-    return (
-      <div ref={rootRef} className="menu-root">
-        {/* menu dimensions not ready */}
-      </div>
-    );
+    return <div ref={rootRef} className="menu-root" />;
   }
 
   const layout = renderMenu(
     [{ label: centerLabel, children: items }],
     { x: cx, y: cy },
     baseRadius,
-    0,
-    undefined
+    0
   );
 
   return (
-    <div ref={rootRef} className="menu-root" style={{
-      minHeight: 320,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }}>
+    <div ref={rootRef} className="menu-root">
       {layout.map((item) => {
         const parentExpanded = item.level === 0 || expanded[item.level - 1] === item.parent;
-        if ((item.level > 0 && !parentExpanded) || (item.level > 1 && !expanded[item.level-1])) return null;
+        if (!parentExpanded) return null;
+
+        // ИСПРАВЛЕННО: Пункты первого уровня с подпунктами всегда активны
+        const isActive = item.isCenter ||
+          (item.level === 1 && item.hasChildren) ||
+          (parentExpanded && (!item.hasChildren || expanded[item.level] === item.id));
 
         let dotClass = "radial-dot";
         if (item.isCenter) {
@@ -164,44 +173,45 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
           dotClass += " radial-dot--no-children";
         }
 
+        // Неактивность только для нецентральных элементов
+        if (!isActive && !item.isCenter) {
+          dotClass += " radial-dot--inactive";
+        }
+
+        // Анимация для новых элементов
         let animationClass = "";
         if (
-          item.level === 1 &&
-          recentlyExpandedLevel === 0 && // тыц по центру
-          parentExpanded
+          recentlyExpandedLevel === item.level - 1 &&
+          parentExpanded &&
+          isActive
         ) {
-          animationClass = " animate-fade-in animate-scale-in";
+          animationClass = " animate-scale-in";
         }
 
         const style: React.CSSProperties = {
-          left: item.position.x - (item.isCenter ? 31 : 22),
-          top: item.position.y - (item.isCenter ? 31 : 22),
-          zIndex: item.isCenter ? 9 : (7+item.level),
-          opacity: parentExpanded ? 1 : 0.25,
-          transition: "left 0.48s cubic-bezier(.82,0,.39,1.32), top 0.48s cubic-bezier(.82,0,.39,1.32)",
+          left: item.position.x,
+          top: item.position.y,
+          zIndex: item.isCenter ? 3 : 100 + item.level * 10,
         };
 
-        const captionStyle: React.CSSProperties = {
+        const labelStyle: React.CSSProperties = {
           left: item.position.x,
           top: item.position.y + (item.isCenter ? 55 : 40),
-          width: 120,
-          transform: "translate(-50%, 0)",
-          position: "absolute",
           fontSize: item.isCenter ? "1.23rem" : "0.94rem",
-          fontWeight: "bold",
           color: item.isCenter
-            ? "var(--color-accent, #4bb6fa)"
+            ? "#4bb6fa"
             : item.hasChildren
-              ? "var(--color-accent, #4bb6fa)"
+              ? "#4bb6fa"
               : "#e3e7ef",
-          textAlign: "center",
-          pointerEvents: "none",
-          userSelect: "none",
-          textShadow: "0 2px 14px #161a2094",
-          zIndex: 10,
+          zIndex: item.isCenter ? 10 : 101 + item.level * 10,
         };
 
-        const hideLabel = item.isCenter && expanded.length > 0 && typeof expanded[0] !== "undefined";
+        // Неактивность для подписи
+        if (!isActive && !item.isCenter) {
+          labelStyle.opacity = 0.33;
+        }
+
+        const hideLabel = item.isCenter && expanded.length > 0;
 
         return (
           <React.Fragment key={item.id}>
@@ -210,18 +220,21 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
               style={style}
               onClick={e => {
                 e.stopPropagation();
-                if (item.isCenter && items.length) {
-                  handleExpand(item.id, item.level)
+                if (item.isCenter) {
+                  if (item.hasChildren) {
+                    handleExpand(item.id, item.level);
+                  } else if (item.onClick) {
+                    item.onClick();
+                  }
                 } else if (item.hasChildren) {
-                  handleExpand(item.id, item.level)
+                  handleExpand(item.id, item.level);
                 } else if (item.onClick) {
                   item.onClick();
-                  setExpanded([]);
                 }
               }}
             />
             {!hideLabel && (
-              <div className="radial-label" style={captionStyle}>
+              <div className="radial-label" style={labelStyle}>
                 {item.label}
               </div>
             )}
@@ -232,4 +245,4 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
   );
 };
 
-export default RadialMenu;
+export default MainMenu;
