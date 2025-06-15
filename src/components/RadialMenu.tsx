@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState } from 'react';
 
 type MenuItem = {
@@ -29,39 +30,6 @@ function getCirclePoints(center: Point, radius: number, count: number, startAngl
     return {
       x: center.x + radius * Math.cos(angle),
       y: center.y + radius * Math.sin(angle),
-    };
-  });
-}
-
-// Функция для получения промежуточных углов между основными пунктами
-function getIntermediateAngles(mainItemsCount: number, childrenCount: number, startAngle = -90) {
-  if (mainItemsCount === 0 || childrenCount === 0) return [];
-  
-  const mainStep = 360 / mainItemsCount;
-  const angles: number[] = [];
-  
-  // Размещаем дочерние элементы в промежутках между основными
-  for (let i = 0; i < childrenCount; i++) {
-    // Угол между текущим и следующим основным элементом
-    const baseAngle = startAngle + mainStep * i;
-    const nextAngle = startAngle + mainStep * (i + 1);
-    const intermediateAngle = baseAngle + (nextAngle - baseAngle) / 2;
-    angles.push(intermediateAngle);
-  }
-  
-  return angles;
-}
-
-function getChildrenPoints(center: Point, radius: number, count: number, mainItemsCount: number, startAngle = -90) {
-  if (count === 0) return [];
-  
-  const angles = getIntermediateAngles(mainItemsCount, count, startAngle);
-  
-  return angles.map(angle => {
-    const radianAngle = (angle * Math.PI) / 180;
-    return {
-      x: center.x + radius * Math.cos(radianAngle),
-      y: center.y + radius * Math.sin(radianAngle),
     };
   });
 }
@@ -116,20 +84,12 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     radius: number,
     level: number,
     parent?: number,
-    startAngle = -90,
-    mainItemsCount?: number
+    startAngle = -90
   ): RenderedItem[] {
     let result: RenderedItem[] = [];
     
-    // Для дочерних элементов вычисляем позиции в промежутках между основными пунктами
-    let positions: Point[];
-    if (level > 0 && mainItemsCount) {
-      positions = getChildrenPoints(center, radius, items.length, mainItemsCount, startAngle);
-    } else if (level > 0) {
-      positions = getCirclePoints(center, radius, items.length, startAngle);
-    } else {
-      positions = [center];
-    }
+    // Для дочерних элементов вычисляем позиции по кругу вокруг родителя
+    const positions = level > 0 ? getCirclePoints(center, radius, items.length, startAngle) : [center];
     
     items.forEach((item, index) => {
       const id = ++idCounter;
@@ -147,15 +107,14 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
       });
       
       if (item.children && expanded[level] === id) {
+        // Дочерние элементы размещаются вокруг своего родителя с меньшим радиусом
         result.push(
           ...renderMenu(
             item.children,
-            { x: cx, y: cy }, // дочерние элементы размещаются относительно центра
-            Math.max(radius * 1.2, 120), // увеличиваем радиус для дочерних элементов
+            pos, // дочерние элементы размещаются вокруг своего родителя
+            Math.max(radius * 0.6, 80), // уменьшаем радиус для дочерних элементов
             level + 1,
-            id,
-            startAngle,
-            items.length // передаём количество основных элементов
+            id
           )
         );
       }
