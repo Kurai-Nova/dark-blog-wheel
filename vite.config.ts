@@ -33,8 +33,8 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           main: resolve(__dirname, 'index.html'),
-          library: resolve(__dirname, 'docs/library.html'),
-          sport: resolve(__dirname, 'docs/sport.html'),
+          library: resolve(__dirname, 'library.html'),
+          sport: resolve(__dirname, 'sport.html'),
         },
         output: {
           manualChunks(id) {
