@@ -10,66 +10,83 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { menuItems, MenuItemProps } from "./MainMenu/items";
-import BreadcrumbChildrenList from "./BreadcrumbChildrenList";
+
+function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
+  // Построим путь из menuItems основываясь на route-структуре и хэше
+  const path: { label: string; url: string }[] = [{ label: "Главная", url: "/" }];
+  let items = menuItems;
+  let url = "";
+  for (let i = 0; i < pathnames.length; i++) {
+    const isHashLib = pathnames[i] === "library" && pathnames[i + 1]?.startsWith("#");
+    let segment = pathnames[i];
+    if (isHashLib) {
+      // library#books, library#articles и т.д.
+      segment += pathnames[i + 1];
+      i++; // skip next
+    }
+    // Поиск по label
+    let found: MenuItemProps | undefined;
+    if (segment.startsWith("library")) {
+      found = items.find(it => it.label === "Библиотека");
+      url = "/library";
+      // try to extract hash-children
+      if (segment === "library#books" || segment === "#books") {
+        url = "/library#books";
+        found = (found?.children || []).find(it => it.label === "Книги") || found;
+        path.push({ label: "Библиотека", url: "/library" });
+        path.push({ label: "Книги", url });
+        continue;
+      }
+      if (segment === "library#articles" || segment === "#articles") {
+        url = "/library#articles";
+        found = (found?.children || []).find(it => it.label === "Статьи") || found;
+        path.push({ label: "Библиотека", url: "/library" });
+        path.push({ label: "Статьи", url });
+        continue;
+      }
+      path.push({ label: found?.label || segment, url });
+      continue;
+    }
+    if (segment === "sport") {
+      found = items.find(it => it.label === "Спорт");
+      url = "/sport";
+      path.push({ label: "Спорт", url });
+      continue;
+    }
+    found = items.find(it => it.label.toLowerCase() === segment); // поиск по label
+    if (found) {
+      url = found?.children ? url : `/${segment}`;
+      path.push({ label: found.label, url });
+      if (found.children) items = found.children;
+    } else {
+      // не найдено, просто slug-сегмент
+      url = url + "/" + segment;
+      path.push({ label: segment, url });
+    }
+  }
+  // Фильтрация дубликатов (бывает при library)
+  return path.filter((p, i, arr) => i === 0 || arr[i].label !== arr[i - 1].label);
+}
 
 const BreadcrumbNav: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const pathname = location.pathname;
-  const hash = location.hash.replace("#", "");
 
-  // Не отображать Breadcrumb на главной странице
-  if (pathname === "/") return null;
+  if (location.pathname === "/") return null;
 
-  let pathArr: string[];
-  if (pathname === "/library" && hash) {
-    // hash может быть books или articles
-    pathArr = ["Библиотека", hash === 'books' ? 'Книги' : hash === 'articles' ? 'Статьи' : hash];
-  } else if (pathname === "/library") {
-    pathArr = ["Библиотека"];
-  } else if (pathname === "/sport") {
-    pathArr = ["Спорт"];
-  } else {
-    pathArr = [];
-  }
+  const segments = location.pathname.split("/").filter(Boolean);
 
-  // Формируем ссылки breadcrumb
-  let cumulativeUrl = "/";
-  const crumbLinks = [
-    {
-      label: "Главная",
-      url: "/",
-    },
-    ...pathArr.map((label, idx) => {
-      if (idx === 0) cumulativeUrl = label === "Библиотека" ? "/library" : label === "Спорт" ? "/sport" : "/";
-      if (label === "Книги") cumulativeUrl = "/library#books";
-      if (label === "Статьи") cumulativeUrl = "/library#articles";
-      return { label, url: cumulativeUrl };
-    }),
-  ];
-
-  // Определяем текущий уровень и детей для промежуточной навигации
-  let showChildren: MenuItemProps[] = [];
-  if (pathArr.length > 0) {
-    let items = menuItems;
-    let found: MenuItemProps | undefined;
-    for (const label of pathArr) {
-      found = items.find(i => i.label === label);
-      if (found && found.children) {
-        items = found.children;
-      } else {
-        items = [];
-      }
-    }
-    if (found && found.children) showChildren = found.children;
-  }
+  // Добавляем hash как отдельный сегмент (например #books для /library)
+  let hashSegment = location.hash ? [location.hash] : [];
+  const pathArr = [...segments, ...hashSegment];
+  const crumbLinks = findMenuPath(pathArr);
 
   return (
-    <div style={{marginBottom:16, marginTop:8}}>
+    <nav style={{margin:'8px 0'}}>
       <Breadcrumb>
         <BreadcrumbList>
           {crumbLinks.map((crumb, idx) => (
-            <React.Fragment key={crumb.label}>
+            <React.Fragment key={crumb.label + idx}>
               <BreadcrumbItem>
                 {idx < crumbLinks.length - 1 ? (
                   <BreadcrumbLink
@@ -78,7 +95,7 @@ const BreadcrumbNav: React.FC = () => {
                       e.preventDefault();
                       navigate(crumb.url);
                     }}
-                    style={{cursor:"pointer"}}
+                    style={{ cursor: "pointer" }}
                   >
                     <span>{crumb.label}</span>
                   </BreadcrumbLink>
@@ -91,10 +108,7 @@ const BreadcrumbNav: React.FC = () => {
           ))}
         </BreadcrumbList>
       </Breadcrumb>
-      {showChildren.length > 0 && (
-        <BreadcrumbChildrenList items={showChildren} navigate={navigate} />
-      )}
-    </div>
+    </nav>
   );
 };
 

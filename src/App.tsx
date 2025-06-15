@@ -1,15 +1,28 @@
+
 import { Toaster } from "@/components/ui/toaster";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Library from "./pages/Library";
 import Sport from "./pages/Sport";
+import BreadcrumbNav from "./components/BreadcrumbNav";
+import React from "react";
 
 import './App.scss'
 
-const App = () => (
+const Layout: React.FC<{children: React.ReactNode}> = ({ children }) => {
+  const location = useLocation();
+  return (
     <>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      {location.pathname !== "/" && <BreadcrumbNav />}
+      {children}
+    </>
+  );
+};
+
+const App = () => (
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <Layout>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/library" element={<Library />} />
@@ -17,9 +30,9 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </Layout>
       <Toaster />
-    </>
+    </BrowserRouter>
 );
 
 export default App;
