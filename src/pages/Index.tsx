@@ -1,7 +1,9 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import MainMenu from "../components/MainMenu/MainMenu";
+import BreadcrumbNav from "../components/BreadcrumbNav";
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
@@ -9,6 +11,7 @@ const Index: React.FC = () => {
   return (
     <div>
       <div className="blog-main">
+        <BreadcrumbNav />
         <MainMenu navigate={navigate} />
         <div>
           <h1>Добро пожаловать в <span style={{color:'#4bb6fa'}}>Nick Notebook</span></h1>
