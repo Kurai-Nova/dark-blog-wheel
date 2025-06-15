@@ -1,0 +1,149 @@
+
+// Color palette (dark, graphite, accent blue)
+$color-bg: #161a20;
+$color-panel: #232834;
+$color-text: #e3e7ef;
+$color-muted: #8891a6;
+$color-border: #313846;
+$color-accent: #4bb6fa;
+$font-head: 'Georgia', 'Times New Roman', Times, serif;
+$font-body: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+
+// CSS reset & base styles
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: $color-bg;
+  color: $color-text;
+  font-family: $font-body;
+  font-size: 18px;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  min-height: 100vh;
+}
+
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4 {
+  font-family: $font-head;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  color: $color-text;
+}
+
+a {
+  color: $color-accent;
+  text-decoration: none;
+  position: relative;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: $color-accent;
+    scale: 0 1;
+    transition: scale 0.22s;
+  }
+  &:hover:after {
+    scale: 1 1;
+  }
+}
+
+.brand-header {
+  font-family: $font-head;
+  font-size: 2.6rem;
+  font-weight: bold;
+  color: $color-accent;
+  letter-spacing: 0.06em;
+  margin-bottom: 18px;
+  margin-top: 28px;
+  text-align: center;
+  user-select: none;
+  text-shadow: 0 2px 12px #23283799;
+}
+
+.blog-main {
+  max-width: 760px;
+  margin: 60px auto 0 auto;
+  padding: 36px 20px 60px 20px;
+  background: $color-panel;
+  border-radius: 14px;
+  box-shadow: 0 0 56px #14161c99;
+  border: 1.5px solid $color-border;
+}
+
+.menu-root {
+  position: relative;
+  width: 100vw;
+  height: 520px;
+  margin: 0 auto;
+}
+
+.radial-dot, .radial-dot--center {
+  position: absolute;
+  top: 0; left: 0;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: $color-bg;
+  border: 2.5px solid $color-accent;
+  box-shadow: 0 2px 10px #111d20aa;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.22s, border 0.22s;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.radial-dot:hover, .radial-dot--center:hover {
+  background: $color-accent;
+  border-color: lighten($color-accent, 10%);
+  box-shadow: 0 4px 18px #4bb6faf1;
+}
+.radial-dot--center {
+  width: 62px; height: 62px;
+  font-size: 1.7rem;
+  font-weight: bold;
+  background: $color-panel;
+  border-width: 2px;
+  z-index: 3;
+  box-shadow: 0 2px 16px #021e308a;
+}
+
+.radial-caption {
+  position: absolute;
+  padding: 5px 16px;
+  background: $color-bg;
+  border-radius: 9px;
+  color: $color-accent;
+  font-weight: bold;
+  font-size: 1rem;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0.94;
+  box-shadow: 0 2px 10px #212e3b77;
+  border: 1px solid $color-accent;
+  transform: translate(-50%, 12px);
+  z-index: 2;
+  transition: opacity 0.2s;
+  text-align: center;
+  font-family: $font-head;
+}
+
+@media (max-width: 900px) {
+  .blog-main { padding: 18px 5px; }
+  .menu-root { height: 380px; }
+}
+@media (max-width: 600px) {
+  .blog-main { border-radius: 0; }
+  .menu-root { height: 270px; }
+  .brand-header { font-size: 2rem;}
+}
+
+// Hide scrollbars for the menu
+.menu-root {
+  overflow: hidden;
+}
