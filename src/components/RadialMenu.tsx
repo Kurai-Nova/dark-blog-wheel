@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState } from 'react';
 
 type MenuItem = {
@@ -16,6 +17,7 @@ type RenderedItem = {
   position: Point;
   isCenter: boolean;
   hasChildren: boolean;
+  onClick?: () => void;
 };
 
 let idCounter = 0;
@@ -85,13 +87,14 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     startAngle = -90
   ): RenderedItem[] {
     let result: RenderedItem[] = [];
+    
+    // Для дочерних элементов вычисляем позиции по кругу
+    const positions = level > 0 ? getCirclePoints(center, radius, items.length, startAngle) : [center];
+    
     items.forEach((item, index) => {
       const id = ++idCounter;
-      let pos = center;
-      if (level > 0 || parent !== undefined) {
-        const points = getCirclePoints(center, radius, items.length, startAngle);
-        pos = points[index];
-      }
+      const pos = level === 0 && parent === undefined ? center : positions[index];
+      
       result.push({
         id,
         level,
@@ -100,13 +103,15 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
         position: pos,
         isCenter: level === 0 && parent === undefined,
         hasChildren: !!item.children && item.children.length > 0,
+        onClick: item.onClick,
       });
+      
       if (item.children && expanded[level] === id) {
         result.push(
           ...renderMenu(
             item.children,
-            pos,
-            Math.max(radius * 0.68, 85), // leave unchanged
+            pos, // дочерние элементы размещаются вокруг своего родителя
+            Math.max(radius * 0.68, 85),
             level + 1,
             id
           )
@@ -208,8 +213,8 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
                   handleExpand(item.id, item.level)
                 } else if (item.hasChildren) {
                   handleExpand(item.id, item.level)
-                } else if (!item.isCenter && !item.hasChildren && items && items[item.id-2] && items[item.id-2].onClick) {
-                  items[item.id-2].onClick?.();
+                } else if (item.onClick) {
+                  item.onClick();
                   setExpanded([]);
                 }
               }}
