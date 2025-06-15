@@ -1,3 +1,4 @@
+
 /* Универсальные стили для базовых компонентов */
 
 .ui-btn {
@@ -10,7 +11,7 @@
   color: #e3e7ef;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   font-weight: 500;
-  font-size: 1.06rem;
+  font-size: 19px;
   padding: 0.55em 1.5em;
   border-radius: 0.6em;
   transition: background 0.2s, color 0.2s, border 0.2s;
@@ -33,7 +34,7 @@
   border: 1.5px solid #313846;
   color: #e3e7ef;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  font-size: 1.05rem;
+  font-size: 19px;
   padding: 0.66em 1em;
   border-radius: 0.48em;
   outline: none;
@@ -44,7 +45,7 @@
 
 .ui-input::placeholder {
   color: #8891a6;
-  font-size: 0.99em;
+  font-size: 18px;
 }
 
 .ui-input:focus {
@@ -66,7 +67,7 @@
   color: #8891a6;
   border: 0;
   padding: 0.48em 1.33em;
-  font-size: 1.03rem;
+  font-size: 18px;
   font-family: inherit;
   border-radius: 0.5em;
   cursor: pointer;
@@ -87,7 +88,7 @@
 .ui-breadcrumb {
   display: flex;
   align-items: center;
-  font-size: 0.93rem;
+  font-size: 17px;
   margin-bottom: 16px;
 }
 .ui-breadcrumb-list {
@@ -124,13 +125,13 @@
 .ui-breadcrumb-sep {
   color: #8891a6;
   padding: 0 6px;
-  font-size: 1.13em;
+  font-size: 20px;
   user-select: none;
   position: relative;
   top: -1px;
 }
 .ui-breadcrumb-bullet {
-  font-size: 1.07em;
+  font-size: 19px;
   display: inline-block;
   vertical-align: middle;
   font-weight: bold;
@@ -156,7 +157,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.1em 1.5em;
-  font-size: 1.08rem;
+  font-size: 19px;
   font-family: 'Inter', sans-serif;
   background: none;
   border: none;
@@ -170,7 +171,7 @@
 .ui-accordion-content {
   padding: 1em 1.6em;
   color: #e3e7ef;
-  font-size: 1.01rem;
+  font-size: 18px;
   line-height: 1.7;
 }
 
@@ -179,7 +180,7 @@
   text-align: center;
   margin: 36px 0 24px 0;
   font-family: 'Georgia', serif;
-  font-size: 2.07rem;
+  font-size: 37px;
   color: #4bb6fa;
   letter-spacing: 0.015em;
   font-weight: bold;
