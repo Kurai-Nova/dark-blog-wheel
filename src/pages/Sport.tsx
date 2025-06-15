@@ -1,12 +1,10 @@
 
 import React from "react";
-import BreadcrumbNav from "../components/BreadcrumbNav";
 
 const Sport: React.FC = () => (
   <div>
     <div className="brand-header">Спорт и здоровье</div>
     <div className="blog-main">
-      <BreadcrumbNav />
       <h2 style={{marginBottom: "24px", textAlign: "center"}}>Тренировка — лучший способ начать свой день</h2>
 
       <div className="sport-intro">

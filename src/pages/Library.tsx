@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import MarkdownRenderer from "../components/MarkdownRenderer/MarkdownRenderer";
-import BreadcrumbNav from "../components/BreadcrumbNav";
 
 const Library: React.FC = () => {
   const location = useLocation();
@@ -22,11 +21,10 @@ const Library: React.FC = () => {
     <div>
       <div className="brand-header">Библиотека</div>
       <div className="blog-main">
-        <BreadcrumbNav />
         {!currentPath ? (
           <>
             <h2 className="library-main-title">Моя цифровая библиотека</h2>
-            
+
             <div className="library-section">
               <h3 className="library-section-title">📚 Книги по программированию</h3>
               <ul className="library-list">

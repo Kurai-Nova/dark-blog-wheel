@@ -11,60 +11,63 @@ import {
 import { menuItems, MenuItemProps } from "./MainMenu/items";
 
 function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
-  // Построим путь из menuItems основываясь на route-структуре и хэше
   const path: { label: string; url: string }[] = [{ label: "Главная", url: "/" }];
   let items = menuItems;
-  let url = "";
+  let currentUrl = "";
+
   for (let i = 0; i < pathnames.length; i++) {
-    const isHashLib = pathnames[i] === "library" && pathnames[i + 1]?.startsWith("#");
-    let segment = pathnames[i];
-    if (isHashLib) {
-      // library#books, library#articles и т.д.
-      segment += pathnames[i + 1];
-      i++; // skip next
-    }
-    // Поиск по label
-    let found: MenuItemProps | undefined;
-    if (segment.startsWith("library")) {
-      found = items.find(it => it.label === "Библиотека");
-      url = "/library";
-      // try to extract hash-children
-      if (segment === "library#books" || segment === "#books") {
-        url = "/library#books";
-        found = (found?.children || []).find(it => it.label === "Книги") || found;
-        path.push({ label: "Библиотека", url: "/library" });
-        path.push({ label: "Книги", url });
+    const segment = pathnames[i];
+    const nextSegment = pathnames[i + 1];
+    const isHashSegment = segment.startsWith("#");
+
+    // Пропускаем пустые и хэш-сегменты (обрабатываются вместе с родителем)
+    if (!segment || isHashSegment) continue;
+
+    const combinedSegment = nextSegment?.startsWith("#")
+      ? `${segment}${nextSegment}`
+      : segment;
+
+    // Поиск в текущем уровне меню
+    let found = items.find(item =>
+      item.label.toLowerCase() === segment ||
+      item.label.toLowerCase() === combinedSegment
+    );
+
+    if (!found && segment === "library" && nextSegment?.startsWith("#")) {
+      // Специальная обработка для библиотеки с хэшем
+      i++; // Пропускаем хэш-сегмент
+      found = items.find(item => item.label === "Библиотека");
+
+      if (found) {
+        const child = found.children?.find(child =>
+          child.label === (nextSegment === "#books" ? "Книги" : "Статьи")
+        );
+
+        path.push({ label: found.label, url: `/${segment}` });
+        currentUrl = `/${segment}${nextSegment}`;
+
+        if (child) {
+          path.push({ label: child.label, url: currentUrl });
+        } else {
+          path.push({ label: nextSegment.substring(1), url: currentUrl });
+        }
         continue;
       }
-      if (segment === "library#articles" || segment === "#articles") {
-        url = "/library#articles";
-        found = (found?.children || []).find(it => it.label === "Статьи") || found;
-        path.push({ label: "Библиотека", url: "/library" });
-        path.push({ label: "Статьи", url });
-        continue;
-      }
-      path.push({ label: found?.label || segment, url });
-      continue;
     }
-    if (segment === "sport") {
-      found = items.find(it => it.label === "Спорт");
-      url = "/sport";
-      path.push({ label: "Спорт", url });
-      continue;
-    }
-    found = items.find(it => it.label.toLowerCase() === segment); // поиск по label
+
+    // Обновляем URL
+    currentUrl = currentUrl ? `${currentUrl}/${segment}` : `/${segment}`;
+
     if (found) {
-      url = found?.children ? url : `/${segment}`;
-      path.push({ label: found.label, url });
+      path.push({ label: found.label, url: currentUrl });
       if (found.children) items = found.children;
     } else {
-      // не найдено, просто slug-сегмент
-      url = url + "/" + segment;
-      path.push({ label: segment, url });
+      path.push({ label: segment, url: currentUrl });
+      items = [];
     }
   }
-  // Фильтрация дубликатов (бывает при library)
-  return path.filter((_, i, arr) => i === 0 || arr[i].label !== arr[i - 1].label);
+
+  return path;
 }
 
 const BreadcrumbNav: React.FC = () => {
@@ -74,14 +77,11 @@ const BreadcrumbNav: React.FC = () => {
   if (location.pathname === "/") return null;
 
   const segments = location.pathname.split("/").filter(Boolean);
-
-  // Добавляем hash как отдельный сегмент (например #books для /library)
-  let hashSegment = location.hash ? [location.hash] : [];
-  const pathArr = [...segments, ...hashSegment];
-  const crumbLinks = findMenuPath(pathArr);
+  const hashSegment = location.hash ? [location.hash] : [];
+  const crumbLinks = findMenuPath([...segments, ...hashSegment]);
 
   return (
-    <nav style={{margin:'8px 0'}}>
+    <nav style={{ margin: '8px 0' }}>
       <Breadcrumb>
         <BreadcrumbList>
           {crumbLinks.map((crumb, idx) => (
