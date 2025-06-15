@@ -9,7 +9,7 @@ import { version } from './package.json';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    base: "kurai-nova.github.io/dark-blog-wheel",
+    base: "https://kurai-nova.github.io/dark-blog-wheel/",
     esbuild: {
       pure: mode === 'production' ? ['console.log'] : [],
     },

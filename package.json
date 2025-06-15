@@ -1,7 +1,7 @@
 {
   "name": "nick-personal-blog",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist"
   },
-  "homepage": "kurai-nova.github.io/dark-blog-wheel",
+  "homepage": "https://kurai-nova.github.io/dark-blog-wheel/",
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.11",
