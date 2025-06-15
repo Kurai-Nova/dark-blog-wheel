@@ -1,6 +1,6 @@
+
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
-import clsx from "clsx"
 import "../../components/ui/ui-clean.scss"
 
 const Tabs = TabsPrimitive.Root
@@ -20,14 +20,18 @@ TabsList.displayName = TabsPrimitive.List.displayName
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
-    ref={ref}
-    className={`ui-tab${className ? " "+className : ""}`}
-    {...props}
-    data-active={props['data-state']==="active"||undefined}
-  />
-))
+>(({ className, ...props }, ref) => {
+  // Получаем data-state из props и прокидываем data-active
+  const dataState = (props as any)['data-state']; // типизацию можно уточнить, если есть желание
+  return (
+    <TabsPrimitive.Trigger
+      ref={ref}
+      className={`ui-tab${className ? " "+className : ""}`}
+      {...props}
+      data-active={dataState === "active" ? true : undefined}
+    />
+  );
+})
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
 const TabsContent = React.forwardRef<
