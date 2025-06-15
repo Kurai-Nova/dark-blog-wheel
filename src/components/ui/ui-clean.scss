@@ -1,0 +1,149 @@
+
+/* Универсальные стили для базовых компонентов */
+
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  border: 1.5px solid #4bb6fa;
+  background: #232834;
+  color: #e3e7ef;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.06rem;
+  padding: 0.55em 1.5em;
+  border-radius: 0.6em;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  cursor: pointer;
+}
+
+.ui-btn:hover, .ui-btn:focus-visible {
+  background: #4bb6fa;
+  color: #ffffff;
+  border-color: #6bd0ff;
+}
+
+.ui-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ui-input {
+  background: #161a20;
+  border: 1.5px solid #313846;
+  color: #e3e7ef;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 1.05rem;
+  padding: 0.66em 1em;
+  border-radius: 0.48em;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 6px;
+}
+
+.ui-input::placeholder {
+  color: #8891a6;
+  font-size: 0.99em;
+}
+
+.ui-input:focus {
+  border-color: #4bb6fa;
+  background: #232834;
+}
+
+.ui-tabs-list {
+  display: inline-flex;
+  border-radius: 0.6em;
+  background: #232834;
+  padding: 3px;
+  margin-bottom: 12px;
+  border: 1.5px solid #313846;
+}
+
+.ui-tab {
+  background: transparent;
+  color: #8891a6;
+  border: 0;
+  padding: 0.48em 1.33em;
+  font-size: 1.03rem;
+  font-family: inherit;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: color 0.17s, background 0.18s;
+}
+
+.ui-tab[data-active="true"] {
+  background: #4bb6fa;
+  color: #161a20;
+  font-weight: 600;
+}
+
+.ui-tab:not([data-active]):hover {
+  color: #4bb6fa;
+  background: #232834cc;
+}
+
+.ui-breadcrumb {
+  display: flex;
+  gap: 0.8em;
+  align-items: center;
+  font-size: 0.99rem;
+  margin-bottom: 18px;
+}
+.ui-breadcrumb a {
+  color: #4bb6fa;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.18s;
+}
+.ui-breadcrumb a:hover {
+  color: #6bd0ff;
+  text-decoration: underline;
+}
+.ui-breadcrumb .sep {
+  color: #8891a6;
+  font-size: 1.2em;
+  font-family: 'Inter', sans-serif;
+}
+
+.ui-accordion {
+  border: 1.5px solid #313846;
+  border-radius: 8px;
+  background: #232834;
+  margin-bottom: 20px;
+}
+.ui-accordion-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1em 1.5em;
+  font-size: 1.08rem;
+  font-family: 'Inter', sans-serif;
+  background: none;
+  border: none;
+  color: #4bb6fa;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ui-accordion-trigger:hover, .ui-accordion-trigger:focus-visible {
+  background: #161a2090;
+}
+.ui-accordion-content {
+  padding: 1em 1.6em;
+  color: #e3e7ef;
+  font-size: 1.01rem;
+  line-height: 1.7;
+}
+
+/* Заголовок и секции */
+.brand-header {
+  text-align: center;
+  margin: 36px 0 24px 0;
+  font-family: 'Georgia', serif;
+  font-size: 2.07rem;
+  color: #4bb6fa;
+  letter-spacing: 0.015em;
+  font-weight: bold;
+}

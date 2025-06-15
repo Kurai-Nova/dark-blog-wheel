@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import MarkdownRenderer from "../components/MarkdownRenderer/MarkdownRenderer";
@@ -23,7 +22,7 @@ const Library: React.FC = () => {
       <div className="blog-main">
         {!currentPath ? (
           <>
-            <h2 style={{marginBottom: "32px", textAlign: "center"}}>Моя цифровая библиотека</h2>
+            <h2 className="library-main-title">Моя цифровая библиотека</h2>
             
             <div className="library-section">
               <h3 className="library-section-title">📚 Книги по программированию</h3>

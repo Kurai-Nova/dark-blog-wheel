@@ -1,15 +1,15 @@
-
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
 import clsx from "clsx"
+import "../../components/ui/ui-clean.scss"
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,
   React.ComponentPropsWithoutRef<"nav"> & {
     separator?: React.ReactNode
   }
->(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />)
+>(({ className, ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" className={`ui-breadcrumb${className ? " "+className : ""}`} {...props} />)
 Breadcrumb.displayName = "Breadcrumb"
 
 const BreadcrumbList = React.forwardRef<

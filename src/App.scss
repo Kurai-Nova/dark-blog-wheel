@@ -472,3 +472,37 @@ a {
 .read-the-docs {
   color: #888;
 }
+
+.brand-header {
+  text-align: center;
+  margin: 36px 0 24px 0;
+  font-family: 'Georgia', serif;
+  font-size: 2.07rem;
+  color: #4bb6fa;
+  letter-spacing: 0.015em;
+  font-weight: bold;
+}
+
+.blog-main h1 {
+  margin-bottom: 1.1rem;
+}
+
+.blog-main p {
+  max-width: 560px;
+  margin: 0 auto;
+  color: #8891a6;
+  font-size: 1.18rem;
+}
+
+.library-main-title {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.library-section-title {
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #313846;
+  font-size: 1.4rem;
+  color: #4bb6fa;
+}
