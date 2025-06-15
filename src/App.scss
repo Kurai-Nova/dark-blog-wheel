@@ -71,13 +71,11 @@ a {
 }
 
 .blog-main {
-  max-width: 760px;
+  max-width: 840px;
   margin: 60px auto 0 auto;
   padding: 36px 20px 60px 20px;
-  background: $color-panel;
   border-radius: 14px;
   box-shadow: 0 0 56px #14161c99;
-  border: 1.5px solid $color-border;
 }
 
 .menu-root {
@@ -269,7 +267,7 @@ a {
 // Стили для страницы библиотеки
 .library-section {
   margin-bottom: 40px;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -293,7 +291,7 @@ a {
 .library-item {
   padding: 16px 0;
   border-bottom: 1px solid $color-border;
-  
+
   &:last-child {
     border-bottom: none;
   }
@@ -309,7 +307,7 @@ a {
   font-weight: bold;
   color: $color-accent;
   font-size: 1.1rem;
-  
+
   &:hover {
     color: $color-accent-hover;
   }
@@ -329,7 +327,7 @@ a {
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 40px;
-  
+
   p {
     margin: 0;
     color: $color-text;
@@ -373,14 +371,14 @@ a {
   color: $color-accent;
   font-weight: 500;
   transition: all 0.2s ease;
-  
+
   &:hover {
     background: rgba(75, 182, 250, 0.15);
     border-color: $color-accent;
     color: $color-accent-hover;
     transform: translateY(-1px);
   }
-  
+
   &:after {
     display: none;
   }
@@ -397,13 +395,13 @@ a {
   list-style: none;
   padding: 0;
   margin: 0 0 16px 0;
-  
+
   li {
     padding: 8px 0;
     padding-left: 20px;
     position: relative;
     color: $color-text;
-    
+
     &:before {
       content: '▸';
       position: absolute;
@@ -428,11 +426,11 @@ a {
     max-width: 98vw;
     height: 340px;
   }
-  
+
   .sport-sections {
     gap: 24px;
   }
-  
+
   .sport-section, .daily-routine {
     padding: 18px;
   }
@@ -446,11 +444,11 @@ a {
     height: 200px;
   }
   .brand-header { font-size: 2rem;}
-  
+
   .sport-links {
     gap: 8px;
   }
-  
+
   .sport-link {
     padding: 10px 12px;
     font-size: 0.95rem;

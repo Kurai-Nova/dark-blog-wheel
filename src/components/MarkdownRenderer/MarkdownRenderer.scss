@@ -1,5 +1,15 @@
-
-@import '../../App.scss';
+// Color palette (dark, graphite, accent blue)
+$color-bg: #161a20;
+$color-panel: #232834;
+$color-text: #e3e7ef;
+$color-muted: #8891a6;
+$color-border: #313846;
+$color-accent: #4bb6fa;
+$color-accent-hover: #6bd0ff;
+$color-accent-bg: #89d9ff;
+$color-dot-border: #4c5566;
+$font-head: 'Georgia', 'Times New Roman', Times, serif;
+$font-body: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
 
 .markdown-renderer {
   width: 100%;
@@ -14,12 +24,12 @@
 
 .markdown-error {
   color: #ff6b6b;
-  
+
   h3 {
     color: #ff6b6b;
     margin-bottom: 12px;
   }
-  
+
   p {
     margin: 0;
   }
@@ -28,47 +38,47 @@
 .markdown-content {
   line-height: 1.7;
   color: $color-text;
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: $font-head;
     color: $color-accent;
     margin-top: 32px;
     margin-bottom: 16px;
-    
+
     &:first-child {
       margin-top: 0;
     }
   }
-  
+
   h1 {
     font-size: 2.2rem;
     border-bottom: 2px solid $color-border;
     padding-bottom: 12px;
   }
-  
+
   h2 {
     font-size: 1.8rem;
   }
-  
+
   h3 {
     font-size: 1.4rem;
   }
-  
+
   p {
     margin-bottom: 16px;
     line-height: 1.7;
   }
-  
+
   ul, ol {
     margin-bottom: 16px;
     padding-left: 24px;
-    
+
     li {
       margin-bottom: 8px;
       line-height: 1.6;
     }
   }
-  
+
   blockquote {
     border-left: 4px solid $color-accent;
     background: rgba(75, 182, 250, 0.05);
@@ -77,7 +87,7 @@
     font-style: italic;
     color: $color-muted;
   }
-  
+
   code {
     background: rgba(75, 182, 250, 0.1);
     color: $color-accent;
@@ -86,7 +96,7 @@
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 0.9em;
   }
-  
+
   pre {
     background: $color-panel;
     border: 1px solid $color-border;
@@ -94,7 +104,7 @@
     padding: 16px;
     overflow-x: auto;
     margin: 20px 0;
-    
+
     code {
       background: none;
       color: $color-text;
@@ -102,46 +112,46 @@
       border-radius: 0;
     }
   }
-  
+
   a {
     color: $color-accent;
     text-decoration: none;
-    
+
     &:hover {
       color: $color-accent-hover;
       text-decoration: underline;
     }
   }
-  
+
   img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
     margin: 16px 0;
   }
-  
+
   table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    
+
     th, td {
       border: 1px solid $color-border;
       padding: 12px;
       text-align: left;
     }
-    
+
     th {
       background: $color-panel;
       color: $color-accent;
       font-weight: bold;
     }
-    
+
     tr:nth-child(even) {
       background: rgba(75, 182, 250, 0.03);
     }
   }
-  
+
   hr {
     border: none;
     height: 2px;
@@ -155,11 +165,11 @@
     h1 {
       font-size: 1.8rem;
     }
-    
+
     h2 {
       font-size: 1.5rem;
     }
-    
+
     h3 {
       font-size: 1.3rem;
     }

@@ -11,121 +11,54 @@ $color-dot-border: #4c5566;
 $font-head: 'Georgia', 'Times New Roman', Times, serif;
 $font-body: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
 
-.menu-root {
-  min-height: 320px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+.dot-menu-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
   overflow: hidden;
+  background-color: #222;
 }
 
-.radial-dot {
+.dot, .dotoff, .dotempty {
   position: absolute;
-  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  z-index: 100;
+  transition: all 0.3s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+.dot {
+  background-color: $color-accent;
   cursor: pointer;
-  width: 44px;
-  height: 44px;
-  background-color: $color-bg;
-  box-shadow: 0 2px 10px #111d20aa;
-  transition:
-    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    opacity 0.3s ease,
-    background 0.18s,
-    box-shadow 0.22s,
-    border 0.22s;
-  z-index: 2;
-  border: 2.5px solid $color-accent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &--center {
-    width: 62px;
-    height: 62px;
-    background: $color-panel;
-    border-width: 2px;
-    z-index: 3;
-    box-shadow: 0 2px 16px #021e308a;
-    font-size: 1.7rem;
-    font-weight: bold;
-  }
-
-  &--has-children {
-    width: 52px;
-    height: 52px;
-    background: $color-accent-bg;
-    border-color: $color-accent;
-    z-index: 4;
-  }
-
-  &--no-children {
-    background: $color-panel;
-    border-color: $color-dot-border;
-  }
-
-  &--inactive {
-    pointer-events: none;
-    opacity: 0.33 !important;
-  }
-
-  &:hover, &--center:hover, &--has-children:hover, &--no-children:hover {
-    background: $color-accent-hover;
-    border-color: $color-accent-hover;
-    box-shadow: 0 4px 18px #4bb6faf1;
-  }
 }
 
-.radial-label {
+.dotoff {
+  background-color: $color-accent-bg;
+  opacity: 0.33;
+  cursor: default;
+}
+
+.dotempty {
+  background-color: orange;
+  cursor: pointer;
+}
+
+.caption {
+  color: #fff;
   position: absolute;
-  font-family: $font-head;
-  font-weight: bold;
-  font-size: 0.94rem;
-  color: $color-accent;
+  font-family: Tahoma;
+  font-size: 11px;
+  text-align: center;
+  cursor: default;
+  z-index: 1;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  padding: 2px 5px;
+  border-radius: 3px;
   pointer-events: none;
-  user-select: none;
-  text-shadow: 0 2px 14px #161a2094;
-  white-space: pre-line;
-  width: 120px;
-  left: 50%;
-  margin-top: 4px;
-  z-index: 10;
-  transition: opacity 0.3s ease;
-
-  &--inactive {
-    opacity: 0.33 !important;
-  }
-}
-
-// Анимации
-@keyframes scaleIn {
-  0% {
-    transform: translate(-50%, -50%) scale(0.5);
-    opacity: 0;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@media (max-width: 900px) {
-  .menu-root {
-    width: 340px;
-    max-width: 98vw;
-    height: 340px;
-  }
-}
-
-@media (max-width: 600px) {
-  .menu-root {
-    width: 200px;
-    max-width: 98vw;
-    height: 200px;
-  }
 }

@@ -1,246 +1,128 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import MenuItem from './MenuItem';
 import './style.scss';
 
-type MenuItem = {
+type MenuItemProps = {
   label: string;
-  onClick?: () => void;
-  children?: MenuItem[];
+  onClick?: (navigate?: (path: string) => void) => void;
+  children?: MenuItemProps[];
 };
 
-type Point = { x: number; y: number };
-
-type RenderedItem = {
-  id: number;
-  level: number;
-  parent?: number;
-  label: string;
-  position: Point;
-  isCenter: boolean;
-  hasChildren: boolean;
-  onClick?: () => void;
+type MainMenuProps = {
+  navigate?: (path: string) => void;
 };
 
-let idCounter = 0;
-
-function getCirclePoints(
-  center: Point,
-  radius: number,
-  count: number,
-  startAngle = -90
-): Point[] {
-  if (count === 0) return [];
-  const step = 360 / count;
-  return Array.from({ length: count }, (_, i) => {
-    const angle = (startAngle + step * i) * Math.PI / 180;
-    return {
-      x: center.x + radius * Math.cos(angle),
-      y: center.y + radius * Math.sin(angle),
-    };
-  });
-}
-
-interface RadialMenuProps {
-  items: MenuItem[];
-  centerLabel?: string;
-}
-
-export const MainMenu: React.FC<RadialMenuProps> = ({
-  items,
-  centerLabel = "Меню",
-}) => {
-  const rootRef = useRef<HTMLDivElement | null>(null);
-  const [expanded, setExpanded] = useState<number[]>([]);
-  const [dimensions, setDimensions] = useState<{ w: number, h: number }>({ w: 0, h: 0 });
-  const [recentlyExpandedLevel, setRecentlyExpandedLevel] = useState<number | null>(null);
-
-  useEffect(() => {
-    const updateDims = () => {
-      if (rootRef.current) {
-        setDimensions({
-          w: rootRef.current.offsetWidth,
-          h: rootRef.current.offsetHeight
-        });
+const menuItems: MenuItemProps[] = [
+  {
+    label: "Здоровье",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#health") : window.location.href = "/#health",
+  },
+  {
+    label: "Спорт",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/sport") : window.location.href = "/sport",
+  },
+  {
+    label: "Путешествия",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#travel") : window.location.href = "/#travel",
+  },
+  {
+    label: "IT",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#it") : window.location.href = "/#it",
+  },
+  {
+    label: "Мысли",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#thoughts") : window.location.href = "/#thoughts",
+  },
+  {
+    label: "Библиотека",
+    children: [
+      {
+        label: "Книги",
+        onClick: (navigate?: (path: string) => void) => navigate ? navigate("/library#books") : window.location.href = "/library#books",
+      },
+      {
+        label: "Статьи",
+        onClick: (navigate?: (path: string) => void) => navigate ? navigate("/library#articles") : window.location.href = "/library#articles",
       }
-    }
-    updateDims();
-    window.addEventListener('resize', updateDims);
-    return () => window.removeEventListener('resize', updateDims);
+    ]
+  },
+];
+
+const MainMenu: React.FC<MainMenuProps> = ({ navigate }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [centerPosition, setCenterPosition] = useState<[number, number]>([0, 0]);
+  const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+
+  // Обновляем центр при изменении размеров
+  useEffect(() => {
+    const updateCenter = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setCenterPosition([
+          rect.width / 2,
+          rect.height / 2
+        ]);
+      }
+    };
+
+    updateCenter();
+    window.addEventListener('resize', updateCenter);
+    return () => window.removeEventListener('resize', updateCenter);
   }, []);
 
-  useEffect(() => {
-    if (recentlyExpandedLevel !== null) {
-      const timeout = setTimeout(() => setRecentlyExpandedLevel(null), 520);
-      return () => clearTimeout(timeout);
-    }
-  }, [recentlyExpandedLevel]);
+  // Обработчик открытия/закрытия элементов
+  const handleToggle = (key: string) => {
+    setOpenItems(prev => {
+      const newSet = new Set(prev);
 
-  const handleExpand = (id: number, level: number) => {
-    let newExpanded = expanded.slice(0, level);
-    if (expanded[level] === id) {
-      setExpanded(newExpanded);
-      setRecentlyExpandedLevel(null);
-    } else {
-      setExpanded([...newExpanded, id]);
-      setRecentlyExpandedLevel(level);
-    }
-  };
-
-  function renderMenu(
-    items: MenuItem[],
-    center: Point,
-    radius: number,
-    level: number,
-    parent?: number
-  ): RenderedItem[] {
-    let result: RenderedItem[] = [];
-
-    let positions: Point[] = [];
-
-    // Центральный элемент
-    if (level === 0) {
-      positions = [center];
-    }
-    // Все дочерние элементы
-    else {
-      positions = getCirclePoints(center, radius, items.length);
-    }
-
-    items.forEach((item, index) => {
-      const id = ++idCounter;
-      const pos = positions[index];
-
-      result.push({
-        id,
-        level,
-        parent,
-        label: item.label,
-        position: pos,
-        isCenter: level === 0 && parent === undefined,
-        hasChildren: !!item.children && item.children.length > 0,
-        onClick: item.onClick,
+      // Закрываем дочерние элементы
+      Array.from(prev).forEach(itemKey => {
+        if (itemKey.startsWith(`${key}-`)) {
+          newSet.delete(itemKey);
+        }
       });
 
-      if (item.children && expanded[level] === id) {
-        // Увеличиваем радиус для дочерних элементов
-        const childRadius = Math.max(radius * 1.2, 100);
-        result.push(
-          ...renderMenu(
-            item.children,
-            pos,
-            childRadius,
-            level + 1,
-            id
-          )
-        );
+      // Переключаем текущий элемент
+      if (newSet.has(key)) {
+        newSet.delete(key);
+      } else {
+        newSet.add(key);
       }
+
+      return newSet;
     });
-    return result;
-  }
+  };
 
-  idCounter = 0;
-  const cx = Math.round((dimensions.w || 520) / 2);
-  const cy = Math.round((dimensions.h || 520) / 2);
-  let baseRadius = Math.max(Math.min(cx, cy) - 100, 100);
-
-  if (!dimensions.w || !dimensions.h) {
-    return <div ref={rootRef} className="menu-root" />;
-  }
-
-  const layout = renderMenu(
-    [{ label: centerLabel, children: items }],
-    { x: cx, y: cy },
-    baseRadius,
-    0
-  );
+  // Проверяем, есть ли открытые дочерние элементы
+  const hasOpenChild = (key: string): boolean => {
+    return Array.from(openItems).some(itemKey =>
+      itemKey.startsWith(`${key}-`)
+    );
+  };
 
   return (
-    <div ref={rootRef} className="menu-root">
-      {layout.map((item) => {
-        const parentExpanded = item.level === 0 || expanded[item.level - 1] === item.parent;
-        if (!parentExpanded) return null;
-
-        // ИСПРАВЛЕННО: Пункты первого уровня с подпунктами всегда активны
-        const isActive = item.isCenter ||
-          (item.level === 1 && item.hasChildren) ||
-          (parentExpanded && (!item.hasChildren || expanded[item.level] === item.id));
-
-        let dotClass = "radial-dot";
-        if (item.isCenter) {
-          dotClass += " radial-dot--center";
-        } else if (item.hasChildren) {
-          dotClass += " radial-dot--has-children";
-        } else {
-          dotClass += " radial-dot--no-children";
-        }
-
-        // Неактивность только для нецентральных элементов
-        if (!isActive && !item.isCenter) {
-          dotClass += " radial-dot--inactive";
-        }
-
-        // Анимация для новых элементов
-        let animationClass = "";
-        if (
-          recentlyExpandedLevel === item.level - 1 &&
-          parentExpanded &&
-          isActive
-        ) {
-          animationClass = " animate-scale-in";
-        }
-
-        const style: React.CSSProperties = {
-          left: item.position.x,
-          top: item.position.y,
-          zIndex: item.isCenter ? 3 : 100 + item.level * 10,
-        };
-
-        const labelStyle: React.CSSProperties = {
-          left: item.position.x,
-          top: item.position.y + (item.isCenter ? 55 : 40),
-          fontSize: item.isCenter ? "1.23rem" : "0.94rem",
-          color: item.isCenter
-            ? "#4bb6fa"
-            : item.hasChildren
-              ? "#4bb6fa"
-              : "#e3e7ef",
-          zIndex: item.isCenter ? 10 : 101 + item.level * 10,
-        };
-
-        // Неактивность для подписи
-        if (!isActive && !item.isCenter) {
-          labelStyle.opacity = 0.33;
-        }
-
-        const hideLabel = item.isCenter && expanded.length > 0;
-
-        return (
-          <React.Fragment key={item.id}>
-            <div
-              className={dotClass + animationClass}
-              style={style}
-              onClick={e => {
-                e.stopPropagation();
-                if (item.isCenter) {
-                  if (item.hasChildren) {
-                    handleExpand(item.id, item.level);
-                  } else if (item.onClick) {
-                    item.onClick();
-                  }
-                } else if (item.hasChildren) {
-                  handleExpand(item.id, item.level);
-                } else if (item.onClick) {
-                  item.onClick();
-                }
-              }}
-            />
-            {!hideLabel && (
-              <div className="radial-label" style={labelStyle}>
-                {item.label}
-              </div>
-            )}
-          </React.Fragment>
-        );
-      })}
+    <div
+      ref={containerRef}
+      className="dot-menu-container"
+      style={{ position: 'relative', width: '100%', height: '100%' }}
+    >
+      {menuItems.map((item, index) => (
+        <MenuItem
+          key={`root-${index}`}
+          item={item}
+          parentPosition={centerPosition}
+          level={0}
+          index={index}
+          totalSiblings={menuItems.length}
+          startAngle={-90}
+          isRoot={true}
+          navigate={navigate}
+          onToggle={handleToggle}
+          isOpen={openItems.has(`root-${index}`)}
+          itemKey={`root-${index}`}
+          hasOpenChild={hasOpenChild(`root-${index}`)}
+        />
+      ))}
     </div>
   );
 };
