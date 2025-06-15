@@ -34,7 +34,10 @@ const MenuItem: React.FC<DotMenuItemProps> = ({
   openItems
 }) => {
   const [position, setPosition] = useState<[number, number]>(parentPosition);
-  const radius = 150 / (level + 1);
+
+  // Радиус с уменьшением для подуровней
+  const baseRadius = 180;
+  const radius = isRoot ? 0 : baseRadius * (1 - level * 0.3);
 
   useEffect(() => {
     const angle = getItemAngle(index, totalSiblings, startAngle);
