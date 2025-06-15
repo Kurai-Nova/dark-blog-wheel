@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -12,6 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "./Breadcrumb";
 
+// Функция поиска читаемых названий для крошек
 function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
   const path: { label: string; url: string }[] = [{ label: "Главная", url: "/" }];
   let items = menuItems;
@@ -22,7 +24,6 @@ function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
     const nextSegment = pathnames[i + 1];
     const isHashSegment = segment.startsWith("#");
 
-    // Пропускаем пустые и хэш-сегменты (обрабатываются вместе с родителем)
     if (!segment || isHashSegment) continue;
 
     const combinedSegment = nextSegment?.startsWith("#")
@@ -30,24 +31,21 @@ function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
       : segment;
 
     // Поиск в текущем уровне меню
-    let found = items.find(item =>
+    let found = items.find(item => 
       item.label.toLowerCase() === segment ||
-      item.label.toLowerCase() === combinedSegment
+      item.label.toLowerCase() === combinedSegment ||
+      (item.url && item.url.replace(/^\//, "") === segment)
     );
 
     if (!found && segment === "library" && nextSegment?.startsWith("#")) {
-      // Специальная обработка для библиотеки с хэшем
-      i++; // Пропускаем хэш-сегмент
+      i++;
       found = items.find(item => item.label === "Библиотека");
-
       if (found) {
         const child = found.children?.find(child =>
           child.label === (nextSegment === "#books" ? "Книги" : "Статьи")
         );
-
         path.push({ label: found.label, url: `/${segment}` });
         currentUrl = `/${segment}${nextSegment}`;
-
         if (child) {
           path.push({ label: child.label, url: currentUrl });
         } else {
@@ -57,14 +55,16 @@ function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
       }
     }
 
-    // Обновляем URL
     currentUrl = currentUrl ? `${currentUrl}/${segment}` : `/${segment}`;
 
     if (found) {
+      // Показываем только читаемый label (никогда алиас)
       path.push({ label: found.label, url: currentUrl });
       if (found.children) items = found.children;
     } else {
-      path.push({ label: segment, url: currentUrl });
+      // Не найдено в меню: пишем человекочитаемый вид (например, без алиаса "/" — первая буква заглавная)
+      const pretty = segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase();
+      path.push({ label: pretty, url: currentUrl });
       items = [];
     }
   }
@@ -114,3 +114,4 @@ const BreadcrumbNav: React.FC = () => {
 };
 
 export default BreadcrumbNav;
+

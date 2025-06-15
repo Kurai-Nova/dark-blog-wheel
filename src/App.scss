@@ -30,6 +30,7 @@ body {
   overflow-x: hidden;
 }
 
+// Хедеры: задаём размеры только через .blog-main
 h1, h2, h3, h4 {
   font-family: $font-head;
   font-weight: bold;
@@ -37,11 +38,31 @@ h1, h2, h3, h4 {
   color: $color-text;
 }
 
+// Стандартное выравнивание для списков и параграфов
+ul, ol {
+  margin: 1em 0 1em 2em;
+  padding: 0 0 0 1.5em;
+  list-style-position: outside;
+  text-align: left;
+}
+li {
+  text-align: left;
+}
+
+p {
+  text-align: left;
+}
+
+// Центрируем при необходимости — только спец.классами (например, .center или .blog-main .center)
+.center {
+  text-align: center;
+}
+
+// Ссылки
 a {
   color: $color-accent;
   text-decoration: none;
   position: relative;
-
   &:after {
     content: '';
     display: block;
@@ -57,12 +78,41 @@ a {
   }
 }
 
+// Основной контейнер
 .blog-main {
   max-width: 840px;
   margin: 30px auto 0 auto;
   padding: 20px 20px 50px 20px;
   border-radius: 14px;
   box-shadow: 0 0 56px #14161c99;
+
+  h1 {
+    margin-bottom: 1.1rem;
+    font-size: 2.07rem;
+    text-align: left;
+  }
+  h2 {
+    font-size: 1.4rem;
+    text-align: left;
+  }
+  h3 {
+    font-size: 1.18rem;
+    text-align: left;
+  }
+  h4 {
+    font-size: 1.07rem;
+    text-align: left;
+  }
+  p {
+    max-width: 560px;
+    margin: 0 auto;
+    color: #8891a6;
+    font-size: 1.12rem;
+    text-align: left;
+  }
+  ul, ol, li {
+    text-align: left;
+  }
 }
 
 .menu-root {
@@ -96,6 +146,7 @@ a {
   text-align: center;
 }
 
+// Лого
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -117,9 +168,6 @@ a {
 .card {
   padding: 2em;
 }
-.read-the-docs {
-  color: #888;
-}
 
 .brand-header {
   text-align: center;
@@ -131,25 +179,18 @@ a {
   font-weight: bold;
 }
 
-.blog-main h1 {
-  margin-bottom: 1.1rem;
+.read-the-docs {
+  color: #888;
 }
 
-.blog-main p {
-  max-width: 560px;
-  margin: 0 auto;
-  color: #8891a6;
-  font-size: 1.12rem;
-}
-
-/* --- Media Queries — группируем внизу! --- */
+/* ------- Media Queries (в самом низу!) ------- */
 
 @media (max-width: 900px) {
   html, body {
-    font-size: 17px;
+    font-size: 16px;
   }
   .blog-main {
-    padding: 18px 5px;
+    padding: 14px 2px;
   }
   .menu-root {
     width: 340px;
@@ -159,15 +200,18 @@ a {
   .brand-header {
     font-size: 1.45rem;
   }
+  .blog-main h1 { font-size: 1.45rem; }
+  .blog-main h2 { font-size: 1.18rem; }
+  .blog-main h3 { font-size: 1rem; }
 }
 
 @media (max-width: 600px) {
   html, body {
-    font-size: 15.8px;
+    font-size: 14.5px;
   }
   .blog-main {
     border-radius: 0;
-    padding: 12px 2px 38px 2px;
+    padding: 10px 1.5px 28px 1.5px;
   }
   .menu-root {
     width: 200px;
@@ -178,17 +222,19 @@ a {
     font-size: 1.17rem;
     margin: 28px 0 18px 0;
   }
-  h1 {font-size: 1.5rem;}
-  h2 {font-size: 1.18rem;}
-  h3 {font-size: 1.07rem;}
+  .blog-main h1 {font-size: 1.09rem;}
+  .blog-main h2 {font-size: 0.99rem;}
+  .blog-main h3 {font-size: 0.89rem;}
+  .blog-main h4 {font-size: 0.88rem;}
   .blog-main p {
-    font-size: 0.98rem;
-    line-height: 1.54;
-    margin-bottom: 0.8em;
+    font-size: 0.91rem;
+    line-height: 1.44;
+    margin-bottom: 0.6em;
   }
   #root {
     padding: 0.5rem;
   }
 }
 
-/* Конец файла — ненужные и неиспользуемые стили удалены */
+/* Конец файла */
+
