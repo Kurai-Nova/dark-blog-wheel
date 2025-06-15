@@ -35,13 +35,13 @@ function getCirclePoints(center: Point, radius: number, count: number, startAngl
 interface RadialMenuProps {
   items: MenuItem[];
   centerLabel?: string;
-  accentColor?: string;
+  // accentColor?: string; // Removed unused prop
 }
 
 export const RadialMenu: React.FC<RadialMenuProps> = ({
   items,
   centerLabel = "Меню",
-  accentColor,
+  // accentColor,   // Removed unused prop
 }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [expanded, setExpanded] = useState<number[]>([]);
@@ -59,7 +59,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     return () => window.removeEventListener('resize', updateDims);
   }, []);
 
-  const handleExpand = (id: number, item: MenuItem, level: number) => {
+  const handleExpand = (id: number, /*item: MenuItem,*/ level: number) => { // 'item' removed
     let newExpanded = expanded.slice(0, level);
     if (expanded[level] === id) {
       setExpanded(newExpanded);
@@ -138,8 +138,8 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
       alignItems: "center",
       justifyContent: "center"
     }}>
-      {layout.map((item, idx) => {
-        const isExpanded = expanded[item.level] === item.id;
+      {layout.map((item /*, idx*/) => { // idx removed
+        // const isExpanded = expanded[item.level] === item.id; // removed unused variable
         const parentExpanded = item.level === 0 || expanded[item.level - 1] === item.parent;
         if ((item.level > 0 && !parentExpanded) || (item.level > 1 && !expanded[item.level-1])) return null;
 
@@ -191,9 +191,9 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
               onClick={e => {
                 e.stopPropagation();
                 if (item.isCenter && items.length) {
-                  handleExpand(item.id, { ...item }, item.level)
+                  handleExpand(item.id, /*{ ...item },*/ item.level)
                 } else if (item.hasChildren) {
-                  handleExpand(item.id, { ...item }, item.level)
+                  handleExpand(item.id, /*{ ...item },*/ item.level)
                 } else if (!item.isCenter && !item.hasChildren && items && items[item.id-2] && items[item.id-2].onClick) {
                   items[item.id-2].onClick?.();
                   setExpanded([]);
