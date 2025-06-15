@@ -12,7 +12,7 @@ const Sport: React.FC = () => {
     // Извлекаем путь из hash части URL
     const hash = location.hash.substring(1); // убираем #
     if (hash) {
-      setCurrentPath(`/library/${hash}`);
+      setCurrentPath(`/sport/${hash}`);
     } else {
       setCurrentPath('');
     }
@@ -30,25 +30,21 @@ const Sport: React.FC = () => {
             <div>
               <h3 className="sport-section-title">Общее</h3>
               <div className="sport-links">
-                <a href="#training-sequence" className="sport-link">Упражнения с собственным весом</a>
+                <a href="#training-sequence" className="sport-link">Эффективность сочетания тренировок на силу и выносливость</a>
               </div>
             </div>
             <div>
-              <h3 className="sport-section-title">💪 Силовые тренировки</h3>
+              <h3 className="sport-section-title">Силовые тренировки</h3>
               <div className="sport-links">
                 <a href="#bodyweight" className="sport-link">Упражнения с собственным весом</a>
                 <a href="#gym" className="sport-link">Программы для тренажерного зала</a>
-                <a href="#home-workout" className="sport-link">Домашние тренировки</a>
-                <a href="#calisthenics" className="sport-link">Калистеника и уличный воркаут</a>
               </div>
             </div>
             <div>
               <h3 className="sport-section-title">🥗 Питание и здоровье</h3>
               <div className="sport-links">
                 <a href="#nutrition" className="sport-link">Основы спортивного питания</a>
-                <a href="#meal-prep" className="sport-link">Подготовка еды на неделю</a>
                 <a href="#supplements" className="sport-link">Спортивные добавки</a>
-                <a href="#hydration" className="sport-link">Питьевой режим спортсмена</a>
               </div>
             </div>
           </div>
