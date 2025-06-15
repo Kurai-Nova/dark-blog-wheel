@@ -6,6 +6,9 @@ $color-text: #e3e7ef;
 $color-muted: #8891a6;
 $color-border: #313846;
 $color-accent: #4bb6fa;
+$color-accent-hover: #6bd0ff;
+$color-accent-bg: #89d9ff;
+$color-dot-border: #4c5566;
 $font-head: 'Georgia', 'Times New Roman', Times, serif;
 $font-body: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
 
@@ -114,17 +117,17 @@ a {
   box-shadow: 0 2px 16px #021e308a;
 }
 .radial-dot--has-children {
-  background: color.adjust($color-accent, $lightness: 20%);
+  background: $color-accent-bg;
   border-color: $color-accent;
 }
 .radial-dot--no-children {
   background: $color-panel;
-  border-color: color.adjust($color-border, $lightness: 18%);
+  border-color: $color-dot-border;
 }
 
 .radial-dot:hover, .radial-dot--center:hover, .radial-dot--has-children:hover, .radial-dot--no-children:hover {
-  background: $color-accent;
-  border-color: color.adjust($color-accent, $lightness: 15%);
+  background: $color-accent-hover;
+  border-color: $color-accent-hover;
   box-shadow: 0 4px 18px #4bb6faf1;
 }
 
