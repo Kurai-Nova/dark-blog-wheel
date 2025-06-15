@@ -87,6 +87,7 @@ a {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border: 2px dashed #d62d4b80 !important; // временно показываем границу для теста
 }
 
 .radial-dot, .radial-dot--center, .radial-dot--has-children, .radial-dot--no-children {

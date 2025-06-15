@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 
 type MenuItem = {
@@ -52,6 +51,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     const updateDims = () => {
       if (rootRef.current) {
         setDimensions({ w: rootRef.current.offsetWidth, h: rootRef.current.offsetHeight });
+        console.log("☑️ .menu-root dimensions:", rootRef.current.offsetWidth, rootRef.current.offsetHeight);
       }
     }
     updateDims();
@@ -68,7 +68,6 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
     }
   };
 
-  // Основная часть — вычисление расположения кружков и их подписей без наложения.
   function renderMenu(
     items: MenuItem[],
     center: Point,
@@ -82,7 +81,6 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
       const id = ++idCounter;
       let pos = center;
       if (level > 0 || parent !== undefined) {
-        // для вложенных элементов считаем точки круга
         const points = getCirclePoints(center, radius, items.length, startAngle);
         pos = points[index];
       }
@@ -96,7 +94,6 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
         hasChildren: !!item.children && item.children.length > 0,
       });
       if (item.children && expanded[level] === id) {
-        // вложенные элементы
         result.push(
           ...renderMenu(
             item.children,
@@ -112,19 +109,28 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
   }
 
   idCounter = 0;
-  // Делаем центр по вертикали и горизонтали, учитывая реальный размер контейнера
   const cx = Math.round((dimensions.w || 520) / 2);
   const cy = Math.round((dimensions.h || 520) / 2);
-  const baseRadius = Math.min(cx, cy) - 80; // минус отступ для подписи
+  console.log("👉 cx, cy:", cx, cy);
+
+  let baseRadius = Math.max(Math.min(cx, cy) - 80, 80);
+
+  if (!dimensions.w || !dimensions.h) {
+    return (
+      <div ref={rootRef} className="menu-root">
+        {/* menu dimensions not ready */}
+      </div>
+    );
+  }
+
   const layout = renderMenu(
     [{ label: centerLabel, children: items }],
     { x: cx, y: cy },
-    Math.max(baseRadius, 115), // сделал радиус чуть больше
+    baseRadius,
     0,
     undefined
   );
 
-  // Рендерим меню
   return (
     <div ref={rootRef} className="menu-root" style={{
       minHeight: 320,
@@ -137,7 +143,6 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
         const parentExpanded = item.level === 0 || expanded[item.level - 1] === item.parent;
         if ((item.level > 0 && !parentExpanded) || (item.level > 1 && !expanded[item.level-1])) return null;
 
-        // Цвет круга зависит от наличия вложенных элементов
         let dotClass = "radial-dot";
         if (item.isCenter) {
           dotClass += " radial-dot--center";
@@ -155,7 +160,6 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({
           transition: "left 0.48s cubic-bezier(.82,0,.39,1.32), top 0.48s cubic-bezier(.82,0,.39,1.32)",
         };
 
-        // Подпись будет под кружком всегда (не в тултипе)
         const captionStyle: React.CSSProperties = {
           left: item.position.x,
           top: item.position.y + (item.isCenter ? 55 : 40),
