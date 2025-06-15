@@ -76,9 +76,11 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ path }) => {
 
   return (
     <div className="markdown-renderer">
-      <ReactMarkdown className="markdown-content">
-        {content}
-      </ReactMarkdown>
+      <div className="markdown-content">
+        <ReactMarkdown>
+          {content}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 };
