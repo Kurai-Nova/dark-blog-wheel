@@ -1,8 +1,10 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Стили избыточные для этого проекта удалены — используется src/styles/main.scss */
 
-// Импортируем только сброс и базовые переменные через main.scss
+/* Импортируем только сброс и базовые переменные через main.scss */
 @import "./styles/main.scss";
+
