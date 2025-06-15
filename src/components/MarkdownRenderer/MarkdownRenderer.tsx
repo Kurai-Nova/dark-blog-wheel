@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import './MarkdownRenderer.scss';
@@ -18,8 +17,10 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ path }) => {
       setError(null);
       
       try {
-        // Конвертируем путь в путь к файлу .md
-        const filePath = `/content${path}.md`;
+        // Получаем базовый путь из vite.config.ts
+        const basePath = import.meta.env.BASE_URL || '/';
+        // Конвертируем путь в путь к файлу .md с учетом базового пути
+        const filePath = `${basePath}content${path}.md`.replace('//', '/');
         console.log('Loading markdown from:', filePath);
         
         const response = await fetch(filePath);
