@@ -21,10 +21,10 @@ const Breadcrumb = React.forwardRef<
 Breadcrumb.displayName = "Breadcrumb"
 
 const BreadcrumbList = React.forwardRef<
-  HTMLOListElement,
-  React.ComponentPropsWithoutRef<"ol">
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<"div">
 >(({ className, ...props }, ref) => (
-  <ol
+  <div
     ref={ref}
     className={clsx("ui-breadcrumb-list", className)}
     {...props}
@@ -33,8 +33,8 @@ const BreadcrumbList = React.forwardRef<
 BreadcrumbList.displayName = "BreadcrumbList"
 
 const BreadcrumbItem = React.forwardRef<
-  HTMLLIElement,
-  React.ComponentPropsWithoutRef<"li">
+  HTMLSpanElement,
+  React.ComponentPropsWithoutRef<"span">
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
@@ -80,7 +80,7 @@ const BreadcrumbSeparator = ({
   children,
   className,
   ...props
-}: React.ComponentProps<"li">) => (
+}: React.ComponentProps<"span">) => (
   <span
     role="presentation"
     aria-hidden="true"
