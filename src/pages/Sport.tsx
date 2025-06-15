@@ -6,13 +6,13 @@ const Sport: React.FC = () => (
     <div className="brand-header">Спорт и здоровье</div>
     <div className="blog-main">
       <h2 style={{marginBottom: "24px", textAlign: "center"}}>Тренировка — лучший способ начать свой день</h2>
-      
+
       <div className="sport-intro">
         <p>Утренняя физическая активность запускает обмен веществ, заряжает энергией и помогает продуктивнее справляться с задачами дня.</p>
       </div>
 
       <div className="sport-sections">
-        <div className="sport-section">
+        <div>
           <h3 className="sport-section-title">🏃‍♂️ Кардио тренировки</h3>
           <div className="sport-links">
             <a href="#running" className="sport-link">Программы бега для начинающих</a>
@@ -22,7 +22,7 @@ const Sport: React.FC = () => (
           </div>
         </div>
 
-        <div className="sport-section">
+        <div>
           <h3 className="sport-section-title">💪 Силовые тренировки</h3>
           <div className="sport-links">
             <a href="#bodyweight" className="sport-link">Упражнения с собственным весом</a>
@@ -32,7 +32,7 @@ const Sport: React.FC = () => (
           </div>
         </div>
 
-        <div className="sport-section">
+        <div>
           <h3 className="sport-section-title">🧘‍♀️ Восстановление и гибкость</h3>
           <div className="sport-links">
             <a href="#yoga" className="sport-link">Йога для начинающих</a>
@@ -42,7 +42,7 @@ const Sport: React.FC = () => (
           </div>
         </div>
 
-        <div className="sport-section">
+        <div>
           <h3 className="sport-section-title">🥗 Питание и здоровье</h3>
           <div className="sport-links">
             <a href="#nutrition" className="sport-link">Основы спортивного питания</a>
