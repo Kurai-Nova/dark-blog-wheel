@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => {
       mode === 'development' && componentTagger()
     ].filter(Boolean),
     build: {
+      outDir: './docs',
       assetsInlineLimit: 1024, // Ресурсы меньшего размера будут встроены как base64
       sourcemap: false,
     },
