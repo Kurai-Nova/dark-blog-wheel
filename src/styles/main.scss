@@ -79,9 +79,14 @@ a {
 
 .menu-root {
   position: relative;
-  width: 100vw;
+  width: 520px;
+  max-width: 98vw;
   height: 520px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .radial-dot, .radial-dot--center, .radial-dot--has-children, .radial-dot--no-children {
@@ -161,11 +166,20 @@ a {
 
 @media (max-width: 900px) {
   .blog-main { padding: 18px 5px; }
-  .menu-root { height: 380px; }
+  .menu-root {
+    width: 340px;
+    max-width: 98vw;
+    height: 340px;
+  }
 }
+
 @media (max-width: 600px) {
   .blog-main { border-radius: 0; }
-  .menu-root { height: 270px; }
+  .menu-root {
+    width: 200px;
+    max-width: 98vw;
+    height: 200px;
+  }
   .brand-header { font-size: 2rem;}
 }
 
