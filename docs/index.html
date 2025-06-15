@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,26 +10,11 @@
     <meta property="og:description" content="Nick's Notebook" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    
-    <!-- GitHub Pages SPA routing hack -->
-    <script type="text/javascript">
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
-    
-    <script type="module" crossorigin src="https://kurai-nova.github.io/dark-blog-wheel/assets/index-v4ej8rEi.js"></script>
-    <link rel="stylesheet" crossorigin href="https://kurai-nova.github.io/dark-blog-wheel/assets/index-9ZCmMi2u.css">
+    <script type="module" crossorigin src="/dark-blog-wheel/assets/index-C2Mj3cja.js"></script>
+    <link rel="stylesheet" crossorigin href="/dark-blog-wheel/assets/index-9ZCmMi2u.css">
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
   </body>
 </html>
