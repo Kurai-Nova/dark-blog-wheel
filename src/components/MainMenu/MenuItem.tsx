@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { getCirclePosition, getItemAngle } from './mathUtils';
 
@@ -39,7 +40,6 @@ const MenuItem: React.FC<DotMenuItemProps> = ({
   const [position, setPosition] = useState<[number, number]>(parentPosition);
   const captionRef = useRef<HTMLDivElement>(null);
   const radius = 150 / (level + 1);
-  const isActive = item.children ? isOpen : false;
 
   // Определяем класс для точки
   const getDotClass = () => {
