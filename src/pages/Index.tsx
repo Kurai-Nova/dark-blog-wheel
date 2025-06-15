@@ -6,25 +6,28 @@ import BrandHeader from "../components/BrandHeader";
 
 const menuData = [
   {
-    label: "Статьи",
-    onClick: () => window.location.href = "/#articles",
-    children: [
-      { label: "Frontend", onClick: () => window.location.href = "/#frontend" },
-      { label: "Backend", onClick: () => window.location.href = "/#backend" },
-      { label: "Полезное", onClick: () => window.location.href = "/#tools" },
-    ],
+    label: "Здоровье",
+    onClick: () => window.location.href = "/#health",
   },
   {
-    label: "О блоге",
-    onClick: () => window.location.href = "/#about"
+    label: "Спорт",
+    onClick: () => window.location.href = "/#sport",
   },
   {
-    label: "Контакты",
-    onClick: () => window.location.href = "/#contacts"
+    label: "Путешествия",
+    onClick: () => window.location.href = "/#travel",
   },
   {
-    label: "Читать ещё",
-    onClick: () => window.location.href = "/#more"
+    label: "IT",
+    onClick: () => window.location.href = "/#it",
+  },
+  {
+    label: "Мысли",
+    onClick: () => window.location.href = "/#thoughts",
+  },
+  {
+    label: "Библиотека",
+    onClick: () => window.location.href = "/#library",
   },
 ];
 
@@ -48,3 +51,4 @@ const Index: React.FC = () => {
 };
 
 export default Index;
+
