@@ -8,7 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { menuItems, MenuItemProps } from "./MainMenu/items";
+import { menuItems } from "./MainMenu/items";
 
 function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
   const path: { label: string; url: string }[] = [{ label: "Главная", url: "/" }];
