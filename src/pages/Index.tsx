@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +28,16 @@ const menuData = [
   },
   {
     label: "Библиотека",
-    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/library") : window.location.href = "/library",
+    children: [
+      {
+        label: "Книги",
+        onClick: (navigate?: (path: string) => void) => navigate ? navigate("/library#books") : window.location.href = "/library#books",
+      },
+      {
+        label: "Статьи", 
+        onClick: (navigate?: (path: string) => void) => navigate ? navigate("/library#articles") : window.location.href = "/library#articles",
+      }
+    ]
   },
 ];
 
@@ -37,7 +47,11 @@ const Index: React.FC = () => {
   // Передаем навигатор в RadialMenu для роутинга без перезагрузки
   const menuWithNav = menuData.map(item => ({
     ...item,
-    onClick: () => item.onClick(navigate),
+    onClick: item.onClick ? () => item.onClick(navigate) : undefined,
+    children: item.children?.map(child => ({
+      ...child,
+      onClick: () => child.onClick(navigate),
+    }))
   }));
 
   return (
