@@ -1,6 +1,7 @@
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
-import { ChevronRight, MoreHorizontal } from "lucide-react"
+import { MoreHorizontal } from "lucide-react"
 import clsx from "clsx"
 import "../../components/ui/ui-clean.scss"
 
@@ -13,10 +14,7 @@ const Breadcrumb = React.forwardRef<
   <nav
     ref={ref}
     aria-label="breadcrumb"
-    className={clsx(
-      "ui-breadcrumb flex flex-row items-center text-xs sm:text-sm gap-0.5",
-      className
-    )}
+    className={clsx("ui-breadcrumb", className)}
     {...props}
   />
 ));
@@ -28,10 +26,7 @@ const BreadcrumbList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={clsx(
-      "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
-      className
-    )}
+    className={clsx("ui-breadcrumb-list", className)}
     {...props}
   />
 ))
@@ -43,7 +38,7 @@ const BreadcrumbItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={clsx("inline-flex items-center gap-1.5", className)}
+    className={clsx("ui-breadcrumb-item", className)}
     {...props}
   />
 ))
@@ -56,11 +51,10 @@ const BreadcrumbLink = React.forwardRef<
   }
 >(({ asChild, className, ...props }, ref) => {
   const Comp = asChild ? Slot : "a"
-
   return (
     <Comp
       ref={ref}
-      className={clsx("transition-colors hover:text-foreground", className)}
+      className={clsx("ui-breadcrumb-link", className)}
       {...props}
     />
   )
@@ -76,7 +70,7 @@ const BreadcrumbPage = React.forwardRef<
     role="link"
     aria-disabled="true"
     aria-current="page"
-    className={clsx("font-normal text-foreground", className)}
+    className={clsx("ui-breadcrumb-page", className)}
     {...props}
   />
 ))
@@ -90,10 +84,11 @@ const BreadcrumbSeparator = ({
   <span
     role="presentation"
     aria-hidden="true"
-    className={clsx("[&>svg]:size-3.5", className)}
+    className={clsx("ui-breadcrumb-sep", className)}
     {...props}
   >
-    {children ?? <ChevronRight />}
+    {/* Милый буллит */}
+    {children ?? <span className="ui-breadcrumb-bullet">•</span>}
   </span>
 )
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
@@ -105,7 +100,7 @@ const BreadcrumbEllipsis = ({
   <span
     role="presentation"
     aria-hidden="true"
-    className={clsx("flex h-9 w-9 items-center justify-center", className)}
+    className={clsx("ui-breadcrumb-ellipsis", className)}
     {...props}
   >
     <MoreHorizontal className="h-4 w-4" />
