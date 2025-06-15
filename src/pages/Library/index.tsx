@@ -20,7 +20,6 @@ const Library: React.FC = () => {
 
   return (
     <div>
-      <div className="brand-header">Библиотека</div>
       <div className="blog-main">
         {!currentPath ? (
           <>
