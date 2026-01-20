@@ -23,8 +23,8 @@ const Library: React.FC = () => {
       {!currentPath ? (
         <>
           <h2 className="library-main-title">Моя цифровая библиотека</h2>
-          <div className="library-section">
-            <h3 className="library-section-title">📚 Книги по программированию</h3>
+          <div className="section">
+            <h3 className="section-title">📚 Книги по программированию</h3>
             <ul className="library-list">
               <li className="library-item">
                 <span className="library-title">"Рефакторинг"</span> — Мартин Фаулер
@@ -40,8 +40,8 @@ const Library: React.FC = () => {
               </li>
             </ul>
           </div>
-          <div className="library-section">
-            <h3 className="library-section-title">📄 Полезные статьи</h3>
+          <div className="section">
+            <h3 className="section-title">📄 Полезные статьи</h3>
             <ul className="library-list">
               <li className="library-item">
                 <a href="https://reactjs.org/docs" className="library-link">Официальная документация React</a>

@@ -26,22 +26,22 @@ const Sport: React.FC = () => {
           <div className="sport-intro">
             <p>Бегать по утрам - тупая затея. Если всё же решите бегать с утра, хотя бы не бегите сразу, дайте организму проснуться хотя бы полчаса, выпейте воды. С утра кровь густая, это негативно сказывается на сердце.</p>
           </div>
-          <div className="sport-sections">
+          <div className="sections">
             <div>
-              <h3 className="sport-section-title">Общее</h3>
+              <h3 className="section-title">Общее</h3>
               <div className="sport-links">
                 <a href="#training-sequence" className="sport-link">Эффективность сочетания тренировок на силу и выносливость</a>
               </div>
             </div>
             <div>
-              <h3 className="sport-section-title">Силовые тренировки</h3>
+              <h3 className="section-title">Силовые тренировки</h3>
               <div className="sport-links">
                 <a href="#bodyweight" className="sport-link">Упражнения с собственным весом</a>
                 <a href="#gym" className="sport-link">Программы для тренажерного зала</a>
               </div>
             </div>
             <div>
-              <h3 className="sport-section-title">🥗 Питание и здоровье</h3>
+              <h3 className="section-title">🥗 Питание и здоровье</h3>
               <div className="sport-links">
                 <a href="#nutrition" className="sport-link">Основы спортивного питания</a>
                 <a href="#supplements" className="sport-link">Спортивные добавки</a>

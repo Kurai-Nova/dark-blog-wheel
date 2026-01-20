@@ -8,7 +8,7 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d docs"
   },
   "homepage": "https://kurai-nova.github.io/dark-blog-wheel/",
   "dependencies": {

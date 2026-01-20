@@ -7,7 +7,7 @@ export type MenuItemProps = {
 export const menuItems: MenuItemProps[] = [
   {
     label: "Здоровье",
-    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#health") : window.location.href = "/#health",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/health") : window.location.href = "/health",
   },
   {
     label: "Спорт",
