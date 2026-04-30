@@ -9,7 +9,6 @@ import BreadcrumbNav from "./components/Breadcrumb/BreadcrumbNav";
 import Index from "./pages/Index";
 import Library from "./pages/Library";
 import Sport from "./pages/Sport";
-import WheelSizes from "./pages/Sport/WheelSizes";
 import Health from "./pages/Health";
 import NotFound from "./pages/NotFound";
 
@@ -32,7 +31,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/library" element={<Library />} />
           <Route path="/sport" element={<Sport />} />
-          <Route path="/wheel-sizes" element={<WheelSizes />} />
           <Route path="/health" element={<Health />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

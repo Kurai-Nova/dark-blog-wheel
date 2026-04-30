@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import MarkdownRenderer from "../../components/MarkdownRenderer/MarkdownRenderer";
+import WheelSizes from "./WheelSizes";
 
 import "./style.scss";
 
@@ -66,7 +67,12 @@ const Sport: React.FC = () => {
           </div>
         </>
       ) : (
-        <MarkdownRenderer path={currentPath} />
+        <>
+        {currentPath ==='wheel-sizes' ?
+          <WheelSizes /> :
+          <MarkdownRenderer path={currentPath} />
+        }
+        </>
       )}
     </div>
   );
