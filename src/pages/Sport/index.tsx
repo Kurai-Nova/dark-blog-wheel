@@ -31,6 +31,7 @@ const Sport: React.FC = () => {
               <h3 className="section-title">Общее</h3>
               <div className="sport-links">
                 <a href="#training-sequence" className="sport-link">Эффективность сочетания тренировок на силу и выносливость</a>
+                <a href="#bicycle" className="sport-link">Заметки про велосипеды</a>
               </div>
             </div>
             <div>
