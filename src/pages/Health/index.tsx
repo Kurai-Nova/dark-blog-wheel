@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import MarkdownRenderer from "../../components/MarkdownRenderer/MarkdownRenderer";
+
+import { MarkdownRenderer } from "@Components";
 
 import "./style.scss";
 

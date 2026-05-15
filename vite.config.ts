@@ -2,7 +2,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { componentTagger } from "lovable-tagger";
 
 import { version } from './package.json';
 
@@ -23,8 +22,7 @@ export default defineConfig(({ mode }) => {
     // clearScreen: mode === 'production',
     plugins: [
       react(),
-      tsconfigPaths(),
-      mode === 'development' && componentTagger()
+      tsconfigPaths()
     ].filter(Boolean),
     build: {
       outDir: './docs',
