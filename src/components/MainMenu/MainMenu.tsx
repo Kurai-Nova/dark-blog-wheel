@@ -8,7 +8,7 @@ type MainMenuProps = {
   navigate?: (path: string) => void;
 };
 
-const MainMenu: React.FC<MainMenuProps> = ({ navigate }) => {
+export const MainMenu: React.FC<MainMenuProps> = ({ navigate }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [centerPosition, setCenterPosition] = useState<[number, number] | null>(null);
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());

@@ -1,4 +1,3 @@
-
 import React from "react";
 
 // ==== Type shims for toast system compatibility ====

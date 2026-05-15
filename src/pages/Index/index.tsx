@@ -1,6 +1,6 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
 import MainMenu from "../../components/MainMenu/MainMenu";
 import "./style.scss";
 

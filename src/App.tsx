@@ -1,15 +1,14 @@
-
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-import { Toaster } from "@/components/ui/toaster";
-import BreadcrumbNav from "./components/Breadcrumb/BreadcrumbNav";
+import { BreadcrumbNav, Toaster } from "@Components";
 
 // Импорты страниц:
 import Index from "./pages/Index";
 import Library from "./pages/Library";
 import Sport from "./pages/Sport";
 import Health from "./pages/Health";
+import Notes from "./pages/Notes";
 import NotFound from "./pages/NotFound";
 
 import './App.scss'
@@ -32,6 +31,7 @@ const App = () => (
           <Route path="/library" element={<Library />} />
           <Route path="/sport" element={<Sport />} />
           <Route path="/health" element={<Health />} />
+          <Route path="/notes" element={<Notes />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,9 +1,9 @@
-
 import * as React from "react"
+import clsx from "clsx"
 import { Slot } from "@radix-ui/react-slot"
 import { MoreHorizontal } from "lucide-react"
-import clsx from "clsx"
-import "../../components/ui/ui-clean.scss"
+
+import "./style.scss"
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,

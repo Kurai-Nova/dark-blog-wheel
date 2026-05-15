@@ -9,7 +9,7 @@ interface MarkdownRendererProps {
   path: string;
 }
 
-const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ path }) => {
+export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ path }) => {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

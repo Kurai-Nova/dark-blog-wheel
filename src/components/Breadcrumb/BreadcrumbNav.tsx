@@ -79,7 +79,7 @@ function findMenuPath(pathnames: string[]): { label: string, url: string }[] {
   return path;
 }
 
-const BreadcrumbNav: React.FC = () => {
+export const BreadcrumbNav: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -99,10 +99,7 @@ const BreadcrumbNav: React.FC = () => {
                 {idx < crumbLinks.length - 1 ? (
                   <BreadcrumbLink
                     asChild
-                    onClick={e => {
-                      e.preventDefault();
-                      navigate(crumb.url);
-                    }}
+                    onClick={e => { e.preventDefault(); navigate(crumb.url); }}
                     style={{ cursor: "pointer" }}
                   >
                     <span>{crumb.label}</span>

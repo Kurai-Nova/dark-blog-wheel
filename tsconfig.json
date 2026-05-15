@@ -19,6 +19,8 @@
         "@Assets/*": ["src/assets/*"],
         "@Commn": ["src/commons/"],
         "@Commn/*": ["src/commons/*"],
+        "@Components": ["src/components/index"],
+        "@Components/*": ["src/components/*"],
         "@Pages": ["src/pages/"],
         "@Pages/*": ["src/pages/*"]
       },

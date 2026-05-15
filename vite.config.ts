@@ -35,10 +35,11 @@ export default defineConfig(({ mode }) => {
           main: resolve(__dirname, 'index.html'),
           library: resolve(__dirname, 'library.html'),
           sport: resolve(__dirname, 'sport.html'),
+          notes: resolve(__dirname, 'notes.html'),
         },
         output: {
           manualChunks(id) {
-            // Вынеси react, react-dom, shadcn/ui и lucide-react в отдельный chunk для кэширования
+            // Выносим react, react-dom, shadcn/ui и lucide-react в отдельный chunk для кэширования
             if (
               /[\\/]node_modules[\\/](react|react-dom|@radix-ui|clsx|lucide-react)/.test(id) ||
               /[\\/]src[\\/]components[\\/]/.test(id)
