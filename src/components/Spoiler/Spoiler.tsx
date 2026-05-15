@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import clsx from "clsx"
 
-// import './style.scss';
+import './style.scss';
 
 type SpoilerProps = {
   title: string | React.ReactNode;
@@ -15,7 +15,7 @@ export const Spoiler: React.FC<SpoilerProps> = ({ title, children }) => {
   return (
     <div className="spoiler" onClick={toggleOpen}>
         {title}
-        <div className={clsx({ "display-none": open })}>
+        <div className={clsx({ "display-none": !open, "spoiler-content": true })}>
           {children}
         </div>
     </div>

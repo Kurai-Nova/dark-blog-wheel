@@ -1,0 +1,11 @@
+.spoiler {
+  background: rgba(100, 120, 140, 0.2);
+  border-radius: 10px;
+  border-style: dashed;
+  padding: 20px;
+  cursor: pointer;
+
+  .spoiler-content {
+    margin-top: 20px;
+  }
+}
