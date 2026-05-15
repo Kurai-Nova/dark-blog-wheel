@@ -10,7 +10,7 @@ import { resolve } from "path";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    base: "/dark-blog-wheel/", // Исправлено (был полный URL, теперь относительный путь)
+    base: "/", // Для гитхаба поставить имя репы
     esbuild: {
       pure: mode === 'production' ? ['console.log'] : [],
     },
