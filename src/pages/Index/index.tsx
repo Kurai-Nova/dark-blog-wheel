@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import MainMenu from "../../components/MainMenu/MainMenu";
+import { MainMenu } from "@Components";
 import "./style.scss";
 
 const Index: React.FC = () => {
