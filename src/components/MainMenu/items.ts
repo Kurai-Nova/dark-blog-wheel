@@ -14,16 +14,16 @@ export const menuItems: MenuItemProps[] = [
     onClick: (navigate?: (path: string) => void) => navigate ? navigate("/sport") : window.location.href = "/sport",
   },
   {
+    label: "Заметки",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/notes") : window.location.href = "/notes",
+  },
+  {
     label: "Путешествия",
     onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#travel") : window.location.href = "/#travel",
   },
   {
     label: "IT",
     onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#it") : window.location.href = "/#it",
-  },
-  {
-    label: "Мысли",
-    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#thoughts") : window.location.href = "/#thoughts",
   },
   {
     label: "Библиотека",
