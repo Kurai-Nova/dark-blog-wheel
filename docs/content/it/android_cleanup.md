@@ -7,8 +7,9 @@
 
 Скачать ADB для разных операционных систем можно по следующим ссылкам:
 
-[Windows](https://dl.google.com/android/repository/platform-tools-latest-windows.zip)
-[Linux](https://dl.google.com/android/repository/platform-tools-latest-linux.zip)
+[Windows](https://dl.google.com/android/repository/platform-tools-latest-windows.zip) \
+[Linux](https://dl.google.com/android/repository/platform-tools-latest-linux.zip) \
+[Копия одной из старых версий на всякий случай](https://disk.yandex.ru/d/-SfokBhCd9Howw) \
 
 Извлекаем содержимое zip-архива в любое удобное место, и уже там запускаем терминал (консоль).
 В консоли нужно запустить `adb shell` и выполнять следующие команды уже там.
@@ -16,10 +17,14 @@
 *Все команды ниже выполняются уже внутри adb shell. В данных командах `pm` - пакетный менеджер, идёт "в комплекте" с adb.*
 
 Вывести список установленных пакетов и найти в нём заданные строки:
-`pm list packages | grep '<OEM/Carrier/App Name>'`
+```shell
+pm list packages | grep '<OEM/Carrier/App Name>'
+```
 
 Для удаления конкретного пакета:
-`pm uninstall -k --user 0 <name of package>`
+```shell
+pm uninstall -k --user 0 <name of package>
+```
 
 **Обратите внимание: ошибка `Failure [INSTALL_FAILED_INVALID_APK: Missing existing base package]`
 может возникать, если ввести только одно тире перед user.**
@@ -31,16 +36,24 @@
 для пользователей с другим uid оно останется  и технически системное приложение не удаляется,
 а просто помечается соответствующим флагом, но это надёжнее чем hide\block.
 
-А еще можно не удалить, а отключать:
-`pm disable-user com.samsung.clipboardsaveservice`
+А еще можно не удалить, а отключать: \
+```shell
+pm disable-user com.samsung.clipboardsaveservice
+```
 или
-`pm disable com.samsung.clipboardsaveservice`
+```shell
+pm disable com.samsung.clipboardsaveservice
+```
 
 И включать:
-`pm enable com.samsung.clipboardsaveservice`
+```shell
+pm enable com.samsung.clipboardsaveservice
+```
 
 А если удалили, то можно и установить через консоль:
-`cmd package install-existing com.samsung.clipboardsaveservice`
+```shell
+cmd package install-existing com.samsung.clipboardsaveservice
+```
 
 Хэлпер с примитивным гуем для PowerShell: https://github.com/farag2/ADB-Debloating/tree/master
 

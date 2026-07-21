@@ -19,11 +19,11 @@ export const menuItems: MenuItemProps[] = [
   },
   {
     label: "Путешествия",
-    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#travel") : window.location.href = "/#travel",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#travel") : window.location.href = "/travel",
   },
   {
     label: "IT",
-    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#it") : window.location.href = "/#it",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#it") : window.location.href = "/it",
   },
   {
     label: "Библиотека",
