@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { MainMenu } from "@Components";
 import "./style.scss";
 
-const Index: React.FC = () => {
+export const Homepage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -21,4 +21,4 @@ const Index: React.FC = () => {
   );
 };
 
-export default Index;
+export default Homepage;

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import MarkdownRenderer from "../../components/MarkdownRenderer/MarkdownRenderer";
 import "./style.scss";
 
-const Library: React.FC = () => {
+export const Library: React.FC = () => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState<string>('');
 

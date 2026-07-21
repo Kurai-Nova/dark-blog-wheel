@@ -1,15 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
+import * as Pages from "@Pages";
 import { BreadcrumbNav, Toaster } from "@Components";
-
-// Импорты страниц:
-import Index from "./pages/Index";
-import Library from "./pages/Library";
-import Sport from "./pages/Sport";
-import Health from "./pages/Health";
-import Notes from "./pages/Notes";
-import NotFound from "./pages/NotFound";
 
 import './App.scss'
 
@@ -27,13 +20,14 @@ const App = () => (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Layout>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/library" element={<Library />} />
-          <Route path="/sport" element={<Sport />} />
-          <Route path="/health" element={<Health />} />
-          <Route path="/notes" element={<Notes />} />
+          <Route path="/" element={<Pages.Homepage />} />
+          <Route path="/library" element={<Pages.Library />} />
+          <Route path="/sport" element={<Pages.Sport />} />
+          <Route path="/health" element={<Pages.Health />} />
+          <Route path="/notes" element={<Pages.Notes />} />
+          <Route path="/it" element={<Pages.ItSection />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Pages.NotFound />} />
         </Routes>
       </Layout>
       <Toaster />

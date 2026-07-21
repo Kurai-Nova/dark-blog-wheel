@@ -5,7 +5,7 @@ import { MarkdownRenderer } from "@Components";
 
 import "./style.scss";
 
-const Health: React.FC = () => {
+export const Health: React.FC = () => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState<string>('');
 

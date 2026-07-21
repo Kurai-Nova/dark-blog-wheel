@@ -5,7 +5,7 @@ import WheelSizes from "./WheelSizes";
 
 import "./style.scss";
 
-const Sport: React.FC = () => {
+export const Sport: React.FC = () => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState<string>('');
 

@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { MarkdownRenderer } from "@Components";
-import { AnimeNotes } from './Anime';
 
 
 import "./style.scss";
 
-export const Notes: React.FC = () => {
+export const ItSection: React.FC = () => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState<string>('');
 
@@ -15,15 +14,15 @@ export const Notes: React.FC = () => {
     // Извлекаем путь из hash части URL
     const hash = location.hash.substring(1); // убираем #
     if (hash) {
-      setCurrentPath(`/notes/${hash}`);
+      setCurrentPath(`/it/${hash}`);
     } else {
       setCurrentPath('');
     }
   }, [location]);
 
   switch (true) {
-    case currentPath === '/notes/anime':
-      return <AnimeNotes />;
+    case currentPath === '/it/some-key': // Оставлено для примера как добавлять кастомные страницы
+      return <></>;
 
     case currentPath.length > 0:
       return <MarkdownRenderer path={currentPath} />;
@@ -33,15 +32,15 @@ export const Notes: React.FC = () => {
 
   return (
     <div>
-      <h2 className="library-main-title">Различные записи</h2>
+      <h2 className="library-main-title">Полезные заметки и статьи про IT</h2>
       <div className="section">
         <h3 className="section-title">Всё подряд</h3>
         <div className="sport-links">
-          <a href="#anime" className="sport-link">Ололо-рецензии на аниму</a>
+          <a href="#android_cleanup" className="sport-link">Шпаргалка по удалению ненужных программ с Android</a>
         </div>
       </div>
     </div>
   );
 };
 
-export default Notes;
+export default ItSection;

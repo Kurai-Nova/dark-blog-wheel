@@ -10,7 +10,7 @@ import { resolve } from "path";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    base: "/", // Для гитхаба поставить имя репы
+    base: "/", // Для гитхаба поставить имя репы (если используется отдельный домен не нужно)
     esbuild: {
       pure: mode === 'production' ? ['console.log'] : [],
     },
@@ -34,6 +34,7 @@ export default defineConfig(({ mode }) => {
           library: resolve(__dirname, 'library.html'),
           sport: resolve(__dirname, 'sport.html'),
           notes: resolve(__dirname, 'notes.html'),
+          it: resolve(__dirname, 'it.html'),
         },
         output: {
           manualChunks(id) {
