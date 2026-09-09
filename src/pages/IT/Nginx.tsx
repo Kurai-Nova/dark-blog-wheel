@@ -169,6 +169,21 @@ location ~* (?:\\.php|(^|/)(?:\\.git|\\.env|cgi-bin|wp-admin|wp-includes|wordpre
     try_files /passwd.gz =200;
 }
 `}</code></pre>
+<br />
+Не забудьте создать zip-бомбу, переименовать в passwd.gz для маскировки и разместить её по указанному пути:
+
+<Spoiler title="Создание zip-бомбы">
+  <pre><code>{`# Создать 10 ГБ нулей и сжать gzip'ом
+dd if=/dev/zero bs=10M count=1024 | gzip -c -9 > passwd.gz
+
+# Разместить в защищенной директории
+sudo mkdir -p /etc/nginx/bombs
+sudo mv passwd.gz /etc/nginx/bombs/
+sudo chown root:root /etc/nginx/bombs/passwd.gz
+sudo chmod 644 /etc/nginx/bombs/passwd.gz`}</code></pre>
+</Spoiler>
+<br />
+Далее уже для нужных сайтов включаете файл с заблокированными путями:
 
         <pre><code>{`# Общий блок server для игнорирования неподходящих доменов
 server {
@@ -183,22 +198,7 @@ server {
     # Обязательно убдиться, что пути из файла не используются!
     include /etc/nginx/blocked-paths.conf;
     # Далее остальные блоки location
-}`}</code></pre>
-
-        <Spoiler
-          title={<strong>Создание zip-бомбы</strong>}
-        >
-          <pre><code>{`# Создать 10 ГБ нулей и сжать gzip'ом
-dd if=/dev/zero bs=10M count=1024 | gzip -c -9 > passwd.gz
-
-# Разместить в защищенной директории
-sudo mkdir -p /etc/nginx/bombs
-sudo mv passwd.gz /etc/nginx/bombs/
-sudo chown root:root /etc/nginx/bombs/passwd.gz
-sudo chmod 644 /etc/nginx/bombs/passwd.gz`}</code></pre>
-        </Spoiler>
-
-        <br />
+}`}</code></pre><br />
 
         <h4>Блокировка перебора пароля для роутов защищённых Basic Auth</h4>
 

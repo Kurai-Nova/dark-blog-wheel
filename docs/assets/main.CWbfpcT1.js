@@ -72,7 +72,14 @@ location ~* (?:\\.php|(^|/)(?:\\.git|\\.env|cgi-bin|wp-admin|wp-includes|wordpre
     root /etc/nginx/bombs;
     try_files /passwd.gz =200;
 }
-`})}),s.jsx("pre",{children:s.jsx("code",{children:`# Общий блок server для игнорирования неподходящих доменов
+`})}),s.jsx("br",{}),"Не забудьте создать zip-бомбу, переименовать в passwd.gz для маскировки и разместить её по указанному пути:",s.jsx(o,{title:"Создание zip-бомбы",children:s.jsx("pre",{children:s.jsx("code",{children:`# Создать 10 ГБ нулей и сжать gzip'ом
+dd if=/dev/zero bs=10M count=1024 | gzip -c -9 > passwd.gz
+
+# Разместить в защищенной директории
+sudo mkdir -p /etc/nginx/bombs
+sudo mv passwd.gz /etc/nginx/bombs/
+sudo chown root:root /etc/nginx/bombs/passwd.gz
+sudo chmod 644 /etc/nginx/bombs/passwd.gz`})})}),s.jsx("br",{}),"Далее уже для нужных сайтов включаете файл с заблокированными путями:",s.jsx("pre",{children:s.jsx("code",{children:`# Общий блок server для игнорирования неподходящих доменов
 server {
     listen 80;
     server_name _;
@@ -85,14 +92,7 @@ server {
     # Обязательно убдиться, что пути из файла не используются!
     include /etc/nginx/blocked-paths.conf;
     # Далее остальные блоки location
-}`})}),s.jsx(o,{title:s.jsx("strong",{children:"Создание zip-бомбы"}),children:s.jsx("pre",{children:s.jsx("code",{children:`# Создать 10 ГБ нулей и сжать gzip'ом
-dd if=/dev/zero bs=10M count=1024 | gzip -c -9 > passwd.gz
-
-# Разместить в защищенной директории
-sudo mkdir -p /etc/nginx/bombs
-sudo mv passwd.gz /etc/nginx/bombs/
-sudo chown root:root /etc/nginx/bombs/passwd.gz
-sudo chmod 644 /etc/nginx/bombs/passwd.gz`})})}),s.jsx("br",{}),s.jsx("h4",{children:"Блокировка перебора пароля для роутов защищённых Basic Auth"}),"1. В общем конфиге Nginx (",s.jsx("code",{children:"nano /etc/nginx/nginx.conf"}),") в секции http нужно добавить директиву ",s.jsx("code",{children:"limit_req_zone"}),":",s.jsx("pre",{children:s.jsx("code",{children:`http {
+}`})}),s.jsx("br",{}),s.jsx("h4",{children:"Блокировка перебора пароля для роутов защищённых Basic Auth"}),"1. В общем конфиге Nginx (",s.jsx("code",{children:"nano /etc/nginx/nginx.conf"}),") в секции http нужно добавить директиву ",s.jsx("code",{children:"limit_req_zone"}),":",s.jsx("pre",{children:s.jsx("code",{children:`http {
     # существующие директивы ...
 
     # Зона для блокировки по IP с ошибками аутентификаци
