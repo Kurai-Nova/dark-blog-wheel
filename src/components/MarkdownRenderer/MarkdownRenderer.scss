@@ -89,32 +89,6 @@ $font-body: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
     color: $color-muted;
   }
 
-  code {
-    background: rgba(75, 182, 250, 0.1);
-    color: $color-accent;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: 90%;
-  }
-
-  pre {
-    background: $color-panel;
-    border: 1px solid $color-border;
-    border-radius: 8px;
-    padding: 16px;
-    overflow-x: auto;
-    margin: 20px 0;
-    text-align: left;
-
-    code {
-      background: none;
-      color: $color-text;
-      padding: 0;
-      border-radius: 0;
-    }
-  }
-
   a {
     color: $color-accent;
     text-decoration: none;

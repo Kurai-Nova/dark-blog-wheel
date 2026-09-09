@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 
 import { MarkdownRenderer } from "@Components";
 
+import { NginxNotes } from "./Nginx";
+
 
 import "./style.scss";
 
@@ -21,8 +23,8 @@ export const ItSection: React.FC = () => {
   }, [location]);
 
   switch (true) {
-    case currentPath === '/it/some-key': // Оставлено для примера как добавлять кастомные страницы
-      return <></>;
+    case currentPath === '/it/nginx': // Оставлено для примера как добавлять кастомные страницы
+      return <NginxNotes/>;
 
     case currentPath.length > 0:
       return <MarkdownRenderer path={currentPath} />;
@@ -37,6 +39,7 @@ export const ItSection: React.FC = () => {
         <h3 className="section-title">Всё подряд</h3>
         <div className="sport-links">
           <a href="#android_cleanup" className="sport-link">Шпаргалка по удалению ненужных программ с Android</a>
+          <a href="#nginx" className="sport-link">Базовая настройка Nginx</a>
         </div>
       </div>
     </div>

@@ -83,7 +83,6 @@ a {
 .blog-main {
   max-width: 840px;
   margin: 30px auto 0 auto;
-  padding: 20px 20px 50px 20px;
   border-radius: 14px;
   box-shadow: 0 0 56px #14161c99;
 
@@ -169,6 +168,32 @@ a {
     margin-bottom: 20px;
     padding-bottom: 8px;
     border-bottom: 2px solid #313846;
+  }
+}
+
+code {
+  background: rgba(75, 182, 250, 0.1);
+  color: $color-accent;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 90%;
+}
+
+pre {
+  background: $color-panel;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 20px 0;
+  text-align: left;
+
+  code {
+    background: none;
+    color: $color-text;
+    padding: 0;
+    border-radius: 0;
   }
 }
 
