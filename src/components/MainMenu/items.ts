@@ -23,7 +23,7 @@ export const menuItems: MenuItemProps[] = [
   },
   {
     label: "IT",
-    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/#it") : window.location.href = "/it",
+    onClick: (navigate?: (path: string) => void) => navigate ? navigate("/it") : window.location.href = "/it",
   },
   {
     label: "Библиотека",
